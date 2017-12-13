@@ -1,0 +1,47 @@
+python flaskapp.py runserver
+
+CREATE DATABASE myflaskapp;
+
+CREATE TABLE users(
+id INT(11) AUTO_INCREMENT PRIMARY KEY,
+ name VARCHAR(100),
+ email VARCHAR(100),
+ username VARCHAR(30),
+ password VARCHAR(100),
+ register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP );
+
+CREATE TABLE articles(
+id INT(11) AUTO_INCREMENT PRIMARY KEY,
+ title VARCHAR(255),
+ author VARCHAR(100),
+ body TEXT,
+ create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+
+
+
+
+
+import MySQLdb
+
+database = MySQLdb.connect("localhost", "OSAMA", "OSAMA")
+cursor = database.cursor()
+# cursor.execute("DROP DATABASE IF EXISTS osama_blog;")
+cursor.execute("CREATE DATABASE IF NOT EXISTS osama_blog DEFAULT CHARSET UTF8")
+database.select_db('osama_blog')
+# cursor.execute("DROP TABLE IF EXISTS users;")
+cursor.execute("CREATE TABLE IF NOT EXISTS users(\
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,\
+                name VARCHAR(100) NOT NULL,\
+                email VARCHAR(100) NOT NULL,\
+                username VARCHAR(100) NOT NULL,\
+                password VARCHAR(100) NOT NULL,\
+                register_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP );")
+
+cursor.execute("CREATE TABLE IF NOT EXISTS articles(\
+                id INT(11) AUTO_INCREMENT PRIMARY KEY,\
+                title VARCHAR(255) NOT NULL,\
+                author VARCHAR(100) NOT NULL,\
+                body TEXT NOT NULL,\
+                written_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP);")
+
+database.close()

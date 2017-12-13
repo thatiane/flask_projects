@@ -1,0 +1,24 @@
+<html>
+<head>
+    <script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/sijax/sijax.js"></script>
+    <script type="text/javascript">
+        {{ g.sijax.get_js()|safe }}
+    </script>
+</head>
+
+<body>
+    <a href="javascript://" onclick="Sijax.request('say_hello', ['OSAMA', 'MOHAMED']);">
+        Say Hello from OSAMA to MOHAMED!
+    </a>
+    <br>
+    <br>
+    <a href="javascript://" onclick="Sijax.request('say_goodbye');">
+        Say Goodbye!
+    </a>
+    <br>
+    <br>
+    <a href="{{url_for('hello')}}">Go to Home page</a>
+</body>
+</html>
