@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OSAMA Restful Api With Ajax</title>
+
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <div class="form">
+        <label><strong>Add Product</strong></label>
+        <input type="text" class="product_name" placeholder="Product Name">
+        <input type="number" class="price" placeholder="Price">
+        <input type="number" class="quantity" placeholder="Quantity">
+        <input type="number" class="discount" placeholder="Discount">
+        <input type="text" class="description" placeholder="Description">
+        <input type="text" class="category" placeholder="category">
+        <button class="save">Add New Product</button>
+    </div>
+
+    <div class="cards-warpper">
+        <!-- Cards will be generated here -->
+        <span class="loading" style="text-align: center;">loading ...</span>
+    </div>
+
+    <script src="../static/js/jquery.min.js" charset="utf-8"></script>
+    <script src="../static/js/all_products.js" charset="utf-8"></script>
+    <script src="../static/js/add_product.js" charset="utf-8"></script>
+    <script src="../static/js/delete_product.js" charset="utf-8"></script>
+    <script src="../static/js/edit_product.js" charset="utf-8"></script>
+</body>
+</html>
