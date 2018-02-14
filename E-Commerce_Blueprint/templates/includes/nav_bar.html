@@ -1,0 +1,71 @@
+      <header class="header">
+        <nav class="navbar">
+          <!-- Search Box-->
+          <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="{{url_for('admin_search.search_admin')}}" method="post" role="search">
+              <input type="text" name="search" placeholder="What are you looking for..." class="form-control" value="{{request.form.search}}" autocomplete="off">
+            </form>
+          </div>
+          <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+              <!-- Navbar Header-->
+              <div class="navbar-header">
+                <!-- Navbar Brand --><a href="/admin/" class="navbar-brand">
+                  <div class="brand-text brand-big"><span>Bootstrap </span><strong>Dashboard</strong></div>
+                  <div class="brand-text brand-small"><strong>BD</strong></div></a>
+                <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+              </div>
+              <!-- Navbar Menu -->
+              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- Search-->
+                <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                <!-- Notifications-->
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge" style="background-color: #dc3545;">{{ count_orders_where_pending }}</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+
+
+                      {% for user in count_orders_by_user %}
+                    <li><a rel="nofollow" href="/admin/show_orders/{{ user['user_name'] }}" class="dropdown-item">
+                        <div class="notification">
+                          <div class="notification-content">{{ user['user_name'] }} ordered {{ user['COUNT(status)'] }}
+                              {% if user['COUNT(status)'] == 1 %}
+                              order
+                              {% else %}
+                              orders
+                              {% endif %}
+                          </div>
+                        </div></a></li>
+                      {% endfor %}
+
+
+
+
+
+                    <li><a rel="nofollow" href="/admin/orders_table" class="dropdown-item all-notifications text-center"> <strong>View All Orders                                            </strong></a></li>
+                  </ul>
+                </li>
+                <!-- Messages                        -->
+                <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-primary">{{ count_messages }}</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                      {% if count_messages >= 1 %}
+                      {% for message in messages %}
+                      <li><a rel="nofollow" href="/admin/message/{{ message.id }}" class="dropdown-item d-flex">
+                        <div class="msg-profile"></div>
+                        <div class="msg-body">
+                          <h3 class="h5">{{ message.username | truncate(30) }}</h3><span>Sent You Message</span>
+                        </div></a></li>
+                      {% endfor %}
+                      {% else %}
+                      {% endif %}
+
+                    <li><a rel="nofollow" href="/admin/messages_table" class="dropdown-item all-notifications text-center"> <strong>Read All Messages    </strong></a></li>
+                  </ul>
+                </li>
+                <!-- Logout    -->
+                <li class="nav-item"><a href="/admin/logout" class="nav-link logout">Logout<i class="fa fa-sign-out"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>

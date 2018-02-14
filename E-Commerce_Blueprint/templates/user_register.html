@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="../static/i.ico" rel="icon">
+    <link href="../static/user/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/user/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/user/css/prettyPhoto.css" rel="stylesheet">
+    <link href="../static/user/css/price-range.css" rel="stylesheet">
+    <link href="../static/user/css/animate.css" rel="stylesheet">
+	<link href="../static/user/css/main.css" rel="stylesheet">
+	<link href="../static/user/css/responsive.css" rel="stylesheet">
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		<div class="header_top"><!--header_top-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+								<li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href=""><i class="fa fa-facebook"></i></a></li>
+								<li><a href=""><i class="fa fa-twitter"></i></a></li>
+								<li><a href=""><i class="fa fa-linkedin"></i></a></li>
+								<li><a href=""><i class="fa fa-dribbble"></i></a></li>
+								<li><a href=""><i class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header_top-->
+		
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="/"><img src="../static/user/images/home/logo.png" alt="" /></a>
+						</div>
+
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+                                {% if session.user_logged_in %}
+								<li><a href="/user_account"><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                {% else %}
+                                <li><a href="/user_register" class="active"><i class="fa fa-edit"></i>Register</a></li>
+								<li><a href="/user_login"><i class="fa fa-lock"></i>Login</a></li>
+                                {% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="/">Home</a></li>
+								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/products/1">Products</a></li>
+                                        {% if session.user_logged_in %}
+										<li><a href="/add_to_cart">Cart</a></li>
+                                        {% else %}
+										<li><a href="/user_register" class="active">Register</a></li>
+                                        <li><a href="/user_login">Login</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+	
+	<section><!--form-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="signup-form"><!--sign up form-->
+						<h2>New User Signup!</h2>
+						{% include 'includes/_messages.html' %}
+                        {% from "includes/_formhelpers.html" import render_field %}
+                        <form method="post" action="{{ url_for('register.user_register') }}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                {{ render_field(form.first_name, class="form-control", autocomplete="off") }}
+                            </div>
+                            <div class="form-group">
+                                {{ render_field(form.last_name, class="form-control", autocomplete="off") }}
+                            </div>
+                            <div class="form-group">
+                                <label>E-Mail</label>
+                                <input type="email" name="email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Select Gender</label> &emsp;
+                                <select name="gender" class="btn btn-outline-primary btn-sm dropdown-toggle">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Select Country</label> &emsp;
+                                <select name="country" class="btn btn-outline-primary btn-sm dropdown-toggle">
+                                    {% include 'includes/select_country.html' %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                {{ render_field(form.username, class="form-control", autocomplete="off") }}
+                            </div>
+                            <div class="form-group">
+                                {{ render_field(form.password, class="form-control", autocomplete="off") }}
+                            </div>
+                            <div class="form-group">
+                                {{render_field(form.confirm, class="form-control")}}
+                            </div>
+                            <div class="form-group">
+                                <label>Add picture to Your Account</label>
+                                <input type="file" name="file" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="margin-top: 30px; margin-bottom: 20px;">Register</button>
+                            <a href="/user_register" class="btn btn-danger" style="margin-top: 10px; border-radius: 0; margin-bottom: 200px;">Reset</a>
+                        </form>
+					</div><!--/sign up form-->
+				</div>
+			</div>
+		</div>
+	</section><!--/form-->
+	
+	
+	<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>e</span>-shopper</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+						</div>
+					</div>
+					<div class="col-sm-7">
+
+					</div>
+					<div class="col-sm-3">
+						<div class="address">
+							<img src="../static/user/images/home/map.png" alt="" />
+							<p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+				</div>
+			</div>
+		</div>
+		
+	</footer><!--/Footer-->
+	
+
+  
+    <script src="../static/user/js/jquery.js"></script>
+	<script src="../static/user/js/price-range.js"></script>
+    <script src="../static/user/js/jquery.scrollUp.min.js"></script>
+	<script src="../static/user/js/bootstrap.min.js"></script>
+    <script src="../static/user/js/jquery.prettyPhoto.js"></script>
+    <script src="../static/user/js/main.js"></script>
+</body>
+</html>

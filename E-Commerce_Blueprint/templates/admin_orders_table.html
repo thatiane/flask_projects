@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin | Orders Table</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="../static/css/fontastic.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="../static/vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="../static/css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="../static/css/custom.css">
+    <!-- Favicon-->
+{#    <!-- Tweaks for older IEs--><!--[if lt IE 9]>#}
+{#        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>#}
+{#        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->#}
+  </head>
+  <body>
+    <div class="page charts-page">
+      <!-- Main Navbar-->
+      {% include 'includes/nav_bar.html' %}
+
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="../static/uploads/users/{{ admin_name }}/{{ admin_image }}" class="img-fluid rounded-circle" style="width: 46px; height: 46px;"></div>
+            <div class="title">
+              <h1 class="h4">{{ admin_name }}</h1>
+              <p style="min-width: 164px; max-width: 195px;">Website Administrator</p>
+            </div>
+          </div>
+          <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+          <ul class="list-unstyled">
+            <li><a href="/admin/"><i class="icon-home"></i>Home</a></li>
+            <li> <a href="/admin/add_product_slider"><i class="fa fa-plus-circle"></i>Add New Slider Product</a></li>
+            <li><a href="/admin/add_product"><i class="fa fa-plus"></i>Add New Product</a></li>
+            <li><a href="/admin/add_category"><i class="fa fa-star-o"></i>Add New Category</a></li>
+            {% if permission == 'admin' %}
+            <li><a href="/admin/add_user"><i class="fa fa-user-plus"></i>Create Account</a></li>
+            {% endif %}
+            <li><a href="/admin/slider_products_table"> <i class="fa fa-sliders"></i>Slider Products Table</a></li>
+            <li><a href="/admin/review_slider_products"> <i class="fa fa-comments-o"></i>Slider Review Table</a></li>
+            <li><a href="/admin/products_table"> <i class="icon-grid"></i>Products Table</a></li>
+            <li><a href="/admin/review_products"> <i class="fa fa-comment-o"></i>Review Products Table</a></li>
+            <li><a href="/admin/categories_table"> <i class="fa fa-bars"></i>Categories Table</a></li>
+            <li><a href="/admin/users_table"> <i class="fa fa-users"></i>users Table</a></li>
+            <li class="active"><a href="/admin/orders_table"> <i class="fa fa-check"></i>Orders Table</a></li>
+            <li><a href="/admin/messages_table"> <i class="fa fa-envelope-o"></i>Messages Table</a></li>
+{#            <li><a href="/admin/login"> <i class="icon-interface-windows"></i>Login Page</a></li>#}
+          </ul>
+        </nav>
+        <div class="content-inner">
+          <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Tables</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/">Home</a></li>
+                <li class="breadcrumb-item">Tables</li>
+                <li class="breadcrumb-item active">Orders Table</li>
+            </ul>
+          </div>
+          <section class="tables">   
+            <div class="container-fluid">
+              <div class="row">
+                  <!-- start my users table -->
+                  <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-close">
+                      <div class="dropdown">
+                        <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                        <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow">
+                            <a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a>
+                            <a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a>
+{#                            <a href="/admin/accept_all_orders" class="dropdown-item edit"> <i class="fa fa-check"></i>Accept All</a>#}
+{#                            <a href="/admin/reject_all_orders" class="dropdown-item edit"> <i class="fa fa-times"></i>Reject All</a>#}
+
+                            <!-- Button trigger modal -->
+                            <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#accept_all_orders">
+                              <i class="fa fa-check"></i>Accept All Orders
+                            </a>
+
+                            <!-- Button trigger modal -->
+                            <a class="dropdown-item edit" href="" data-toggle="modal" data-target="#reject_all_orders">
+                              <i class="fa fa-times"></i>Reject All Orders
+                            </a>
+
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                      <h3 class="h4">Orders Table &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; orders : &emsp; {{ orders | length }}</h3>
+                    </div>
+                    <div class="card-body">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>User name</th>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Total</th>
+                            <th>Order Date</th>
+                            <th>Accept</th>
+                            <th>Reject</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in orders %}
+                          <tr>
+                            <td><a href="/admin/show_orders/{{ order.user_name }}">{{ order.user_name }}</a></td>
+                            <td>{{ order.product_name }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.price }}</td>
+                            <td>{{ order.discount }}</td>
+                            <td>{{ (order.price - order.discount) * order.quantity }}</td>
+                            <td>{{ order.order_date.strftime('%a, %d %b %Y %H:%M:%S') }}</td>
+{#                            <td><a href="/admin/accept_orders/{{ order.product_id }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-check" aria-hidden="true"></i>&emsp; Accept</a></td>#}
+{#                            <td><a href="/admin/reject_orders/{{ order.product_id }}" class="btn btn-sm btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i>&emsp; Reject</a></td>#}
+
+                            <td>
+
+                                <!-- Button trigger modal -->
+                                <button class="btn btn-sm btn-outline-primary" href="" data-toggle="modal" data-target="#accept{{ order.id }}">
+                                  <i class="fa fa-check"></i> &emsp; Accept
+                                </button>
+                                <!-- accept order modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="accept{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Accept Order</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to accept the order ?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <a href="/admin/accept_orders/{{ order.id }}"><button class="btn btn-primary">Confirm Accept</button></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                            </td>
+
+
+
+                            <td>
+
+                                <!-- Button trigger modal -->
+                                <button class="btn btn-sm btn-outline-danger" href="" data-toggle="modal" data-target="#reject{{ order.id }}">
+                                  <i class="fa fa-times"></i> &emsp; Reject
+                                </button>
+                                <!-- reject order modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="reject{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Reject Order</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure you want to reject the order ?
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <a href="/admin/reject_orders/{{ order.id }}"><button class="btn btn-danger">Confirm Reject</button></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                            </td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                  <!-- end my users table -->
+              </div>
+            </div>
+
+
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+          </section>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+          <!-- Page Footer-->
+          <footer class="main-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Your company &copy; 2017-2019</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <p>Design by <a href="https://bootstrapious.com/admin-templates" class="external">Bootstrapious</a></p>
+                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- accept_all_orders modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="accept_all_orders" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Accept All orders</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to accept all orders ?
+            <br>
+            <br>
+            You have : &emsp; {{ orders | length }} &emsp; {% if orders|length == 1 or orders|length == 0 %} order {% else %} orders {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="/admin/accept_all_orders"><button class="btn btn-primary">Confirm Accept</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- reject_all_orders modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="reject_all_orders" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Reject All Orders</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to reject all orders ?
+            <br>
+            <br>
+            You have : &emsp; {{ orders | length }} &emsp; {% if orders|length == 1 or orders|length == 0 %} order {% else %} orders {% endif %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="/admin/reject_all_orders"><button class="btn btn-danger">Confirm Reject</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Javascript files-->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="../static/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="../static/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../static/js/front.js"></script>
+  </body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSAMA | Home Page</title>
+    <link href="../static/i.ico" rel="icon">
+    <link href="../static/user/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/user/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/user/css/prettyPhoto.css" rel="stylesheet">
+    <link href="../static/user/css/price-range.css" rel="stylesheet">
+    <link href="../static/user/css/animate.css" rel="stylesheet">
+	<link href="../static/user/css/main.css" rel="stylesheet">
+	<link href="../static/user/css/responsive.css" rel="stylesheet">
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		<div class="header_top"><!--header_top-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header_top-->
+
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="/"><img src="../static/user/images/home/logo.png" alt="" /></a>
+						</div>
+
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+                                {% if session.user_logged_in %}
+                                <li><a href="/user_account"><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                <li><a href="/user_logout"><i class="fa fa-lock"></i>Logout</a></li>
+                                {% else %}
+                                <li><a href="/user_register"><i class="fa fa-edit"></i>Register</a></li>
+								<li><a href="/user_login"><i class="fa fa-lock"></i>Login</a></li>
+                                {% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="/" class="active">Home</a></li>
+								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/products/1">Products</a></li>
+                                        {% if session.user_logged_in %}
+										<li><a href="/add_to_cart">Cart</a></li>
+                                        {% else %}
+										<li><a href="/user_register">Register</a></li>
+                                        <li><a href="/user_login">Login</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="search_box pull-right">
+                            <form action="{{url_for('search.user_search')}}" method="post">
+                                <input type="text" name="search" placeholder="Search" value="{{request.form.search}}" autocomplete="off">
+                            </form>
+{#							<input type="text" placeholder="Search"/>#}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+
+	<section id="slider"><!--slider-->
+		<div class="container">
+        {% include 'includes/_messages.html' %}
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+							<li data-target="#slider-carousel" data-slide-to="1"></li>
+							<li data-target="#slider-carousel" data-slide-to="2"></li>
+						</ol>
+
+						<div class="carousel-inner">
+
+							<div class="item active">
+                                {% for slider in slider_products_first %}
+								<div class="col-sm-6">
+									<h1><span>{{ slider.product_name }}</span></h1>
+									<h2>&#36; {{ slider.price }}</h2>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
+									<p>{{ slider.description | truncate(30) }}</p>
+                                    {% if slider.quantity == 1 or slider.quantity > 1  %}
+                                    <a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Add to cart</a>
+                                    {% elif slider.quantity == 0 %}
+                                    <a href="" class="btn btn-danger" style="margin-top: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                    {% endif %}
+								</div>
+								<div class="col-sm-6">
+                                    <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
+{#									<img src="../static/user/images/home/pricing.png"  class="pricing" alt="" />#}
+								</div>
+                                {% endfor %}
+							</div>
+
+                            <div class="item">
+                                {% for slider in slider_products_second %}
+								<div class="col-sm-6">
+									<h1><span>{{ slider.product_name }}</span></h1>
+									<h2>&#36; {{ slider.price }}</h2>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
+									<p>{{ slider.description | truncate(30) }}</p>
+                                    {% if slider.quantity == 1 or slider.quantity > 1  %}
+									<a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Add to cart</a>
+                                    {% elif slider.quantity == 0 %}
+                                    <a href="" class="btn btn-danger" style="margin-top: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                    {% endif %}
+								</div>
+								<div class="col-sm-6">
+                                    <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
+{#									<img src="../static/user/images/home/pricing.png"  class="pricing" alt="" />#}
+								</div>
+                                {% endfor %}
+							</div>
+
+                            <div class="item">
+                                {% for slider in slider_products_third %}
+								<div class="col-sm-6">
+									<h1><span>{{ slider.product_name }}</span></h1>
+									<h2>&#36; {{ slider.price }}</h2>
+                                    <h3 style="color: red;">{{ ((100 * slider.discount) / slider.price) | round(2, 'common')}} &#37; OFF</h3>
+									<p>{{ slider.description | truncate(30) }}</p>
+                                    {% if slider.quantity == 1 or slider.quantity > 1  %}
+									<a href="/add_product_to_cart_from_slider/{{ slider.id }}" class="btn btn-default get"><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Add to cart</a>
+                                    {% elif slider.quantity == 0 %}
+                                    <a href="" class="btn btn-danger" style="margin-top: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                    {% endif %}
+								</div>
+								<div class="col-sm-6">
+                                    <a href="/preview_production_slider/{{ slider.id }}/"><img src="../static/uploads/slider_products/{{ slider.product_name }}/{{ slider.files }}" class="girl img-responsive" style="max-width: 520px; height: 354px;" /></a>
+{#									<img src="../static/user/images/home/pricing.png"  class="pricing" alt="" />#}
+								</div>
+                                {% endfor %}
+							</div>
+
+						</div>
+
+						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+							<i class="fa fa-angle-left"></i>
+						</a>
+						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+							<i class="fa fa-angle-right"></i>
+						</a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section><!--/slider-->
+
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Categories</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+                            {% for category in categories %}
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="/categories/{{ category.category }}">{{ category.category }}</a></h4>
+								</div>
+							</div>
+							{% endfor %}
+
+						</div><!--/category-products-->
+
+
+
+						<div class="price-range"><!--price-range-->
+							<h2>Price Range</h2>
+							<div class="well text-center" style="padding-bottom: 0; margin-bottom: 0;">
+                                <form action="{{ url_for('web_home_price_range.products_price_range') }}" method="post">
+{#								    <input type="text" name="price_range" class="span2" value="{{ request.form.price_range }}" data-slider-min="1000" data-slider-max="100000" data-slider-step="1000" data-slider-value="[10000, 100000]" id="sl2">#}
+
+                                    <input type="number" name="min_price" class="form-control" placeholder="minimum price">
+                                    <br>
+                                    <input type="number" name="max_price" class="form-control" placeholder="maximum price">
+                                    <input type="submit" value="Go" class="btn btn-primary">
+                                </form>
+                                 <br />
+{#								 <b class="pull-left">&#36; 1000</b> <b class="pull-right">&#36; 100000</b>#}
+							</div>
+						</div><!--/price-range-->
+
+
+					</div>
+				</div>
+
+				<div class="col-sm-9 padding-right">
+					<div class="features_items"><!--features_items-->
+						<h2 class="title text-center">Latest Products</h2>
+
+                        {% for product in latest_products %}
+						<div class="col-sm-4">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+                                        <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
+										<h2>&#36;{{ product.price }}</h2>
+                                        <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
+										<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                        {% if product.quantity == 1 or product.quantity > 1  %}
+										<a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        {% elif product.quantity == 0 %}
+                                        <a href="" class="btn btn-danger" style="margin-bottom: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                        {% endif %}
+									</div>
+{#									<div class="product-overlay">#}
+{#										<div class="overlay-content">#}
+{#											<h2>&#36;{{ product.price }}</h2>#}
+{#                                            <h3 style="color: #fff;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>#}
+{#											<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>#}
+{#											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>#}
+{#										</div>#}
+{#									</div>#}
+                                    <img src="../static/user/images/home/new.png" class="new" alt="" />
+{#									<img src="../static/user/images/home/sale.png" class="new" alt="" />#}
+								</div>
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+                        {% endfor %}
+
+
+					</div><!--features_items-->
+
+
+
+					<div class="recommended_items"><!--recommended_items-->
+						<h2 class="title text-center">recommended</h2>
+
+						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+
+
+								<div class="item active">
+
+                                    {% for product in recommended_products %}
+                                    <div class="col-sm-4">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
+                                                    <h2>&#36;{{ product.price }}</h2>
+                                                    <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
+                                                    <p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                                    {% if product.quantity == 1 or product.quantity > 1  %}
+                                                    <a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    {% elif product.quantity == 0 %}
+                                                    <a href="" class="btn btn-danger" style="margin-bottom: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="choose">
+                                                <ul class="nav nav-pills nav-justified">
+                                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+								</div>
+
+
+								<div class="item">
+
+
+                                    {% for product in recommended_products_second %}
+                                    <div class="col-sm-4">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
+                                                    <h2>&#36;{{ product.price }}</h2>
+                                                    <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | round(2, 'common')}} &#37; OFF</h3>
+                                                    <p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                                    {% if product.quantity == 1 or product.quantity > 1  %}
+                                                    <a href="/add_product_to_cart/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    {% elif product.quantity == 0 %}
+                                                    <a href="" class="btn btn-danger" style="margin-bottom: 24px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="choose">
+                                                <ul class="nav nav-pills nav-justified">
+                                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+
+								</div>
+							</div>
+							 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+								<i class="fa fa-angle-left"></i>
+							  </a>
+							  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+								<i class="fa fa-angle-right"></i>
+							  </a>
+						</div>
+					</div><!--/recommended_items-->
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>e</span>-shopper</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+						</div>
+					</div>
+
+                    <div class="col-sm-2">
+						<div class="single-widget">
+							<h2>Service</h2>
+							<ul class="nav nav-pills nav-stacked">
+								<li><a href="/products">All Products</a></li>
+								<li><a href="/user_register">Register</a></li>
+								<li><a href="/user_login">Login</a></li>
+							</ul>
+						</div>
+					</div>
+                    <div class="col-sm-5">
+                        <div class="single-widget">
+                            <h2> Contact Us</h2>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li><a href="/contact_us">Send Us Your Message</a></li>
+                            </ul>
+                        </div>
+					</div>
+					<div class="col-sm-3">
+						<div class="address">
+							<img src="../static/user/images/home/map.png" alt="" />
+							<p>Virginia Beach, VA(Virginia)</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+				</div>
+			</div>
+		</div>
+
+	</footer><!--/Footer-->
+
+
+
+    <script src="../static/user/js/jquery.js"></script>
+	<script src="../static/user/js/bootstrap.min.js"></script>
+	<script src="../static/user/js/jquery.scrollUp.min.js"></script>
+	<script src="../static/user/js/price-range.js"></script>
+    <script src="../static/user/js/jquery.prettyPhoto.js"></script>
+    <script src="../static/user/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Slider</title>
+    <link href="../../static/i.ico" rel="icon">
+    <link href="../../../static/user/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../static/user/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../static/user/css/prettyPhoto.css" rel="stylesheet">
+    <link href="../../../static/user/css/price-range.css" rel="stylesheet">
+    <link href="../../../static/user/css/animate.css" rel="stylesheet">
+	<link href="../../../static/user/css/main.css" rel="stylesheet">
+	<link href="../../../static/user/css/responsive.css" rel="stylesheet">
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		<div class="header_top"><!--header_top-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+								<li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href=""><i class="fa fa-facebook"></i></a></li>
+								<li><a href=""><i class="fa fa-twitter"></i></a></li>
+								<li><a href=""><i class="fa fa-linkedin"></i></a></li>
+								<li><a href=""><i class="fa fa-dribbble"></i></a></li>
+								<li><a href=""><i class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header_top-->
+		
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="/"><img src="../../../static/user/images/home/logo.png" alt="" /></a>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+                                {% if session.user_logged_in %}
+                                <li><a href="/user_account"><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                <li><a href="/user_logout"><i class="fa fa-lock"></i>Logout</a></li>
+                                {% else %}
+                                <li><a href="/user_register"><i class="fa fa-edit"></i>Register</a></li>
+								<li><a href="/user_login"><i class="fa fa-lock"></i>Login</a></li>
+                                {% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+                                <li><a href="/">Home</a></li>
+								<li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/products/1">Products</a></li>
+										<li><a href="" class="active">Slider Product Details</a></li>
+                                        {% if session.user_logged_in %}
+										<li><a href="/add_to_cart">Cart</a></li>
+                                        {% else %}
+										<li><a href="/user_login">Login</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+	
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						<h2>Categories</h2>
+						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+                            {% for category in categories %}
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title"><a href="/categories/{{ category.category }}">{{ category.category }}</a></h4>
+								</div>
+							</div>
+                            {% endfor %}
+
+						</div><!--/category-products-->
+
+
+						
+					</div>
+				</div>
+				
+				<div class="col-sm-9 padding-right">
+					<div class="product-details"><!--product-details-->
+						<div class="col-sm-12" style="margin-bottom: 50px;">
+							<div class="view-product">
+								<img src="../../static\uploads\slider_products\{{ product.product_name }}\{{ product.files }}" />
+								<h3>ZOOM</h3>
+							</div>
+						</div>
+
+						<div class="col-sm-12">
+							<div class="product-information"><!--/product-information-->
+								<img src="../../static/user/images/product-details/new.jpg" class="newarrival" alt="" />
+								<h2>{{ product.product_name }}</h2>
+								<p>Web ID: {{ product.id }}</p>
+{#								<img src="../../static/user/images/product-details/rating.png" alt="" />#}
+								<span>
+									<span>&#36; {{ product.price }}</span>
+{#									<label>Quantity:</label>#}
+{#									<input type="text" value="3" />#}
+                                    {% if product.quantity == 1 or product.quantity > 1  %}
+									<a href="/add_product_to_cart_from_slider/{{ product.id }}" class="btn btn-fefault cart">
+										<i class="fa fa-shopping-cart"></i>
+										Add to cart
+									</a>
+                                    {% elif product.quantity == 0 %}
+                                    <a href="" class="btn btn-danger" style="margin-top: 4px; margin-left: 25px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                    {% endif %}
+								</span>
+								<p><b>Discount Price:</b>&emsp; {{ product.price - product.discount }}</p>
+                                <p><b>Category:</b>&emsp; {{ product.category }}</p>
+                                <p><b>AVG Rate:</b>&emsp;
+                                    {% if rate['avg_rate'] in range(1,6) %}
+                                    {{ rate['avg_rate'] | int }}
+                                    &#47; 5
+                                    {% elif rate['avg_rate'] == 0.1,6.0 %}
+                                        {% if rate['avg_rate'] == None %}
+                                        {{ 'Not Rated Yet' }}
+                                        {% else %}
+                                        {{ rate['avg_rate'] | round(2, 'common') }}
+                                        &#47; 5
+                                        {% endif %}
+{#                                    {{ rate['avg_rate'] | round(2, 'common') }}#}
+{#                                    &#47; 5#}
+                                    {% elif rate['avg_rate'] == None %}
+                                    {{ 'Not Rated Yet' }}
+                                    {% endif %}
+                                </p>
+                                <p><b>Availability:</b>&emsp; {% if product.quantity == 1 or product.quantity > 1  %}{{ product.quantity }}{% elif product.quantity == 0 %}{{ 'Out Of Stock' }}{% endif %}</p>
+                                <p><b>Puplished In:</b>&emsp; {{ product.create_date.strftime('%a, %d %b %Y %H:%M:%S') }}</p>
+{#								<a href=""><img src="../../static/user/images/product-details/share.png" class="share img-responsive"  alt="" /></a>#}
+							</div><!--/product-information-->
+						</div>
+					</div><!--/product-details-->
+					
+					<div class="category-tab shop-details-tab"><!--category-tab-->
+						<div class="col-sm-12">
+							<ul class="nav nav-tabs">
+								<li class="active"><a href="#details" data-toggle="tab">Product Details</a></li>
+								<li><a href="#reviews" data-toggle="tab">Reviews ({{ count_reviews }})</a></li>
+							</ul>
+						</div>
+						<div class="tab-content">
+							<div class="tab-pane fade active in" id="details" >
+                                <p style="padding: 50px; text-align: justify; color: #000; font-size: 18px; font-family: sans-serif;">{{ product.description }}</p>
+							</div>
+							
+
+							
+
+							
+							<div class="tab-pane fade " id="reviews" >
+								<div class="col-sm-12">
+									<ul>
+										<li><i class="fa fa-user" style="color: #FE980F;"></i>&ensp;{{ slider_review.user_name }}</li> &emsp;
+                                        {% if slider_reviewresult == 1 %}
+										<li><i class="fa fa-clock-o" style="color: #FE980F;"></i>&ensp;{{ slider_review.review_date.strftime('%H:%M:%S') }}</li> &emsp;
+										<li><i class="fa fa-calendar-o" style="color: #FE980F;"></i> &ensp;{{ slider_review.review_date.strftime('%A, %d %B %Y') }}</li>
+                                        {% endif %}
+									</ul>
+									<p>{{ slider_review.review }}</p>
+
+									<p><b>Write Your Review</b></p>
+
+									<form action="{{ url_for('slider_product_review', id=product.id) }}" method="post">
+										<textarea name="product_review_area"></textarea>
+										<b>Rate: </b> &emsp;
+                                        <select name="rate" style="width: 80px;" class="btn btn-default dropdown-toggle">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                        <br>
+                                        <br>
+										<button type="submit" class="btn btn-default pull-left">
+											Add Review
+										</button>
+									</form>
+								</div>
+							</div>
+							
+						</div>
+					</div><!--/category-tab-->
+					
+					<div class="recommended_items"><!--recommended_items-->
+						<h2 class="title text-center">recommended items</h2>
+						
+						<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="item active">
+                                    {% for product in products %}
+									<div class="col-sm-4">
+										<div class="product-image-wrapper">
+											<div class="single-products">
+												<div class="productinfo text-center">
+													<a href="/preview_production/{{ product.id }}"><img src="../../static\uploads\slider_products\{{ product.product_name }}\{{ product.files }}" style="height: 232px;"/></a>
+													<h2>&#36;{{ product.price }}</h2>
+                                                    <h3 style="color: red;">{{ ((100 * product.discount) / product.price) | int}} &#37; OFF</h3>
+													<p style="max-width: 252px; overflow: hidden;">{{ product.product_name | truncate(30) }}</p>
+                                                    {% if product.quantity == 1 or product.quantity > 1  %}
+													<a href="/add_product_to_cart_from_slider/{{ product.id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    {% elif product.quantity == 0 %}
+                                                    <a href="" class="btn btn-danger" style="margin-bottom: 24px; margin-left: 25px; border-radius: 0;" disabled=""><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>Out Of Stock</a>
+                                                    {% endif %}
+												</div>
+											</div>
+										</div>
+									</div>
+                                    {% endfor %}
+								</div>
+							</div>
+						</div>
+					</div><!--/recommended_items-->
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>e</span>-shopper</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+						</div>
+					</div>
+					<div class="col-sm-7">
+
+					</div>
+					<div class="col-sm-3">
+						<div class="address">
+							<img src="../../static/user/images/home/map.png" alt="" />
+							<p>Virginia Beach, VA(Virginia)</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+				</div>
+			</div>
+		</div>
+		
+	</footer><!--/Footer-->
+	
+
+  
+    <script src="../../static/user/js/jquery.js"></script>
+	<script src="../../static/user/js/price-range.js"></script>
+    <script src="../../static/user/js/jquery.scrollUp.min.js"></script>
+	<script src="../../static/user/js/bootstrap.min.js"></script>
+    <script src="../../static/user/js/jquery.prettyPhoto.js"></script>
+    <script src="../../static/user/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link href="../static/i.ico" rel="icon">
+    <link href="../static/user/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/user/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/user/css/prettyPhoto.css" rel="stylesheet">
+    <link href="../static/user/css/price-range.css" rel="stylesheet">
+    <link href="../static/user/css/animate.css" rel="stylesheet">
+	<link href="../static/user/css/main.css" rel="stylesheet">
+	<link href="../static/user/css/responsive.css" rel="stylesheet">
+    <style>
+        .cart_product{
+            margin: 0;
+        }
+    </style>
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		<div class="header_top"><!--header_top-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
+								<li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href=""><i class="fa fa-facebook"></i></a></li>
+								<li><a href=""><i class="fa fa-twitter"></i></a></li>
+								<li><a href=""><i class="fa fa-linkedin"></i></a></li>
+								<li><a href=""><i class="fa fa-dribbble"></i></a></li>
+								<li><a href=""><i class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header_top-->
+		
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="/"><img src="../static/user/images/home/logo.png" alt="" /></a>
+						</div>
+
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+                                {% if session.user_logged_in %}
+								<li><a href="/user_account"><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="" class="active"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="/user_logout"><i class="fa fa-lock"></i> Logout</a></li>
+                                {% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="/">Home</a></li>
+								<li class="dropdown"><a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/products/1">Products</a></li>
+                                        {% if session.user_logged_in %}
+										<li><a href="/add_to_cart" class="active">Cart</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+
+	<section id="cart_items">
+		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="/">Home</a></li>
+				  <li class="active">Shopping Cart</li>
+				</ol>
+			</div>
+            {% include 'includes/_messages.html' %}
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Product</td>
+							<td class="description">Name</td>
+							<td class="price">Price</td>
+                            <td class="price">Discount</td>
+							<td class="quantity">Quantity</td>
+							<td class="total">Total</td>
+							<td>Delete</td>
+						</tr>
+					</thead>
+					<tbody>
+
+
+                        {% for order in orders %}
+						<tr>
+                        <td class="cart_product">
+							<a href="/preview_production/{{ order.product_id }}"><img style="max-width: 110px; max-height: 110px;" src="../../static/uploads/products/{{ order.product_name }}/{{ order.files }}"></a>
+                            <a href="/preview_production_slider/{{ order.product_id - order.product_id - order.product_id }}"><img style="max-width: 110px; max-height: 110px;" src="../../static/uploads/slider_products/{{ order.product_name }}/{{ order.files }}"></a>
+                        </td>
+                        <td class="cart_description">
+                            <h4>{{ order.product_name }}</h4>
+                            <p>Web id: {{ order.product_id }}</p>
+                        </td>
+                        <td class="cart_price">
+                            <p> &#36; {{ order.price }}</p>
+                        </td>
+                        <td class="cart_price">
+                            <p> &#36; {{ order.discount }}</p>
+                        </td>
+                        <td class="cart_quantity">
+                            <div class="cart_quantity_button">
+                                <a class="cart_quantity_up" href="/increase_cart_product_quantity/{{ order.product_id }}"> <span style="display: block; margin-top: 3px;">+</span> </a>
+                                <form method="post" action="/edit_cart_product_quantity/{{ order.product_id }}">
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="{{ order.quantity }}" autocomplete="off" size="4">
+                                </form>
+                                <a class="cart_quantity_down" href="/decrease_cart_product_quantity/{{ order.product_id }}"> <span style="display: block; margin-top: 3px;">-</span> </a>
+                            </div>
+                        </td>
+                        <td class="cart_total">
+                            <p class="cart_total_price">&#36; {{ ((order.price - order.discount) * order.quantity) | round(2, 'common') }}</p>
+                        </td>
+                        <td class="cart_delete">
+                            <a class="cart_quantity_delete" href="/delete_product_from_cart/{{ order.product_id }}"><i class="fa fa-times"></i></a>
+                        </td>
+						</tr>
+
+                        {% endfor %}
+
+
+
+                        <tr>
+							<td colspan="4">&nbsp;</td>
+							<td colspan="4">
+								<table class="table table-condensed total-result">
+									<tr>
+										<td>Number Of Products</td>
+										<td>{{ orders | length }}</td>
+									</tr>
+									<tr>
+										<td>Quantity</td>
+                                        {% if f | length == 0 %}
+                                        <td>0</td>
+                                        {% else %}
+										<td>{{ quantity }}</td>
+                                        {% endif %}
+									</tr>
+									<tr class="shipping-cost">
+										<td>Shipping Cost</td>
+										<td>Free</td>
+									</tr>
+									<tr>
+										<td>Total</td>
+                                        {% if f | length == 0 %}
+                                        <td><span>&#36; 0</span></td>
+                                        {% else %}
+										<td><span>&#36; {{ price | round(2, 'common') }}</span></td>
+                                        {% endif %}
+									</tr>
+								</table>
+{#                            <a href="{{ url_for('buy') }}" class="btn btn-primary">Finish Buy Request &raquo;</a>#}
+                                <!-- Button trigger modal -->
+                                <button class="btn btn-primary btn-lg" href="" data-toggle="modal" data-target="#confirm_buy" style="display: block; margin: 10px auto; padding: 10px 50px;">
+                                  <i class="fa fa-check"></i>&emsp; Finish Buy Request &emsp; &raquo;
+                                </button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+
+	<footer id="footer"><!--Footer-->
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+						<div class="companyinfo">
+							<h2><span>e</span>-shopper</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+						</div>
+					</div>
+					<div class="col-sm-7">
+
+					</div>
+					<div class="col-sm-3">
+						<div class="address">
+							<img src="../static/user/images/home/map.png" alt="" />
+							<p>Virginia Beach, VA(Virginia)</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
+					<p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+				</div>
+			</div>
+		</div>
+		
+	</footer><!--/Footer-->
+	
+
+
+    <!-- confirm buy products modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="confirm_buy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Buy Products Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want buy this products ?
+            <br>
+            <br>
+            You have to buy : &emsp; {{ orders | length }} &emsp; {% if orders | length == 1 or orders | length == 0 %} product {% else %} products {% endif %}
+            <br>
+            with quantity of :
+              {% if f | length == 0 %}
+              &emsp; 0
+              {% else %}
+              &emsp; {{ quantity }}
+              {% endif %}
+            <br>
+            and total money :
+              {% if f | length == 0 %}
+              &emsp; {{ 0 }}
+              {% else %}
+              &emsp; {{ price | round(2, 'common') }} &#36;
+              {% endif %}
+          </div>
+          <div class="modal-footer">
+            <a type="button" href="" data-dismiss="modal"><button class="btn btn-danger">Cancel</button></a>
+            <a type="button" href="{{ url_for('user_buy.buy') }}"><button class="btn btn-success">Confirm Buy</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <script src="../static/user/js/jquery.js"></script>
+	<script src="../static/user/js/bootstrap.min.js"></script>
+	<script src="../static/user/js/jquery.scrollUp.min.js"></script>
+    <script src="../static/user/js/jquery.prettyPhoto.js"></script>
+    <script src="../static/user/js/main.js"></script>
+</body>
+</html>

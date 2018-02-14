@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin | View Product</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="../../static/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="../../static/css/fontastic.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="../../static/vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="../../static/css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="../../static/css/custom.css">
+    <!-- Favicon-->
+{#    <!-- Tweaks for older IEs--><!--[if lt IE 9]>#}
+{#        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>#}
+{#        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->#}
+
+      <style>
+          form label{
+              color: #000;
+              font-weight: 600;
+          }
+      </style>
+  </head>
+  <body>
+    <div class="page charts-page">
+      <!-- Main Navbar-->
+      {% include 'includes/nav_bar.html' %}
+
+      <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="../../static/uploads/users/{{ admin_name }}/{{ admin_image }}" class="img-fluid rounded-circle" style="width: 46px; height: 46px;"></div>
+            <div class="title">
+              <h1 class="h4">{{ admin_name }}</h1>
+              <p style="min-width: 164px; max-width: 195px;">Website Administrator</p>
+            </div>
+          </div>
+          <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+          <ul class="list-unstyled">
+            <li> <a href="/admin/"><i class="icon-home"></i>Home</a></li>
+            <li> <a href="/admin/add_product_slider"><i class="fa fa-plus-circle"></i>Add New Slider Product</a></li>
+            <li> <a href="/admin/add_product"><i class="fa fa-plus"></i>Add New Product</a></li>
+            <li> <a href="/admin/add_category"><i class="fa fa-star-o"></i>Add New Category</a></li>
+            {% if permission == 'admin' %}
+            <li><a href="/admin/add_user"><i class="fa fa-user-plus"></i>Create Account</a></li>
+            {% endif %}
+            <li><a href="/admin/slider_products_table"> <i class="fa fa-sliders"></i>Slider Products Table</a></li>
+            <li><a href="/admin/review_slider_products"> <i class="fa fa-comments-o"></i>Slider Review Table</a></li>
+            <li><a href="/admin/products_table"> <i class="icon-grid"></i>Products Table</a></li>
+            <li><a href="/admin/review_products"> <i class="fa fa-comment-o"></i>Review Products Table</a></li>
+            <li><a href="/admin/categories_table"> <i class="fa fa-bars"></i>Categories Table</a></li>
+            <li><a href="/admin/users_table"> <i class="fa fa-users"></i>users Table</a></li>
+            <li><a href="/admin/orders_table"> <i class="fa fa-check"></i>Orders Table</a></li>
+            <li><a href="/admin/messages_table"> <i class="fa fa-envelope-o"></i>Messages Table</a></li>
+{#            <li> <a href="/admin/login"> <i class="icon-interface-windows"></i>Login Page</a></li>#}
+          </ul>
+        </nav>
+        <div class="content-inner">
+          <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Preview Product</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin/">Home</a></li>
+              <li class="breadcrumb-item active">Preview Product</li>
+            </ul>
+          </div>
+          <section class="tables">
+            <div class="container-fluid">
+              <div class="row">
+                  <br>
+              <div class="container">
+                {% block body %}
+                {% include 'includes/_messages.html' %}
+                    <h3>Name : &emsp; {{ product.product_name }}</h3>
+                    <br>
+                    <p><b>Web ID</b> : &emsp; {{ product.id }}</p>
+                    <p><b>Price</b> : &emsp; {{ product.price }} &#36;</p>
+                    <p><b>Discount</b> : &emsp; {{ product.discount }} &#36;</p>
+                    <p><b>Price After Discount</b> : &emsp; {{ product.price - product.discount }} &#36;</p>
+                    <p><b>Quantity</b> : &emsp;
+                        {% if product.quantity == 1 or product.quantity > 1  %}
+                        {{ product.quantity }}
+                        {% elif product.quantity == 0 %}
+                        {{ 0 }}
+                        {% endif %}
+                    </p>
+                    <p><b>AVG Rate</b> : &emsp;
+                        {% if rate['avg_rate'] in range(1,6) %}
+                        {{ rate['avg_rate'] | int }}
+                        &#47; 5
+                        {% elif rate['avg_rate'] == 0.1,6.0 %}
+                            {% if rate['avg_rate'] == None %}
+                            {{ 'Not Rated Yet' }}
+                            {% else %}
+                            {{ rate['avg_rate'] | round(2, 'common') }}
+                            &#47; 5
+                            {% endif %}
+                        {% elif rate['avg_rate'] == None %}
+                        {{ 'Not Rated Yet' }}
+                        {% endif %}
+                    </p>
+                    <p><b>Category</b> : &emsp; {{ product.category }}</p>
+                    <p><b>Puplished In</b> :&emsp; {{ product.create_date.strftime('%A, %d %b %Y %H:%M:%S') }}</p>
+                    <img src="../../static\uploads\products\{{ product.product_name }}\{{ product.files }}" style="max-width: 50%; max-height: 50%; display: block; margin: 25px auto;"/>
+                    <p><b>Description</b> : &emsp; {{ product.description }}</p>
+                    {% if reviewresult == 1 %}
+                    <hr style="border: 1px solid rgba(0, 0, 0, .5);">
+                    <p><b>Last Review by</b> : &emsp; {{ review.user_name }}</p>
+                    <p><b>Last Review in</b> : &emsp; {{ review.review_date.strftime('%A, %d %b %Y %H:%M:%S') }}</p>
+                    <p class="text-justify"><b>Review</b> : &emsp; {{ review.review }}</p>
+                    {% endif %}
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                {% endblock %}
+              </div>
+              </div>
+            </div>
+          </section>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+          <!-- Page Footer-->
+          <footer class="main-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Your company &copy; 2017-2019</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <p>Design by <a href="https://bootstrapious.com/admin-templates" class="external">Bootstrapious</a></p>
+                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <!-- Javascript files-->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="../../static/js/jquery.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="../../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="../../static/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../../static/js/front.js"></script>
+  </body>
+</html>
