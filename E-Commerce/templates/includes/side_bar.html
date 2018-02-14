@@ -1,0 +1,16 @@
+<li> <a href="/admin/"><i class="icon-home"></i>Home</a></li>
+<li> <a href="/admin/add_product_slider"><i class="fa fa-plus-circle"></i>Add New Slider Product</a></li>
+<li><a href="/admin/add_product"><i class="fa fa-plus"></i>Add New Product</a></li>
+<li><a href="/admin/add_category"><i class="fa fa-star-o"></i>Add New Category</a></li>
+{% if permission == 'admin' %}
+<li><a href="/admin/add_user"><i class="fa fa-user-plus"></i>Create Account</a></li>
+{% endif %}
+<li><a href="/admin/slider_products_table"> <i class="fa fa-sliders"></i>Slider Products Table</a></li>
+<li><a href="/admin/review_slider_products"> <i class="fa fa-comments-o"></i>Slider Review Table</a></li>
+<li><a href="/admin/products_table"> <i class="icon-grid"></i>Products Table</a></li>
+<li><a href="/admin/review_products"> <i class="fa fa-comment-o"></i>Review Products Table</a></li>
+<li><a href="/admin/categories_table"> <i class="fa fa-bars"></i>Categories Table</a></li>
+<li><a href="/admin/users_table"> <i class="fa fa-users"></i>users Table</a></li>
+<li><a href="/admin/orders_table"> <i class="fa fa-check"></i>Orders Table</a></li>
+<li><a href="/admin/messages_table"> <i class="fa fa-envelope-o"></i>Messages Table</a></li>
+{#            <li><a href="/admin/login"> <i class="icon-interface-windows"></i>Login Page</a></li>#}

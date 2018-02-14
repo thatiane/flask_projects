@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link href="../static/i.ico" rel="icon">
+    <link href="../static/user/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/user/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/user/css/prettyPhoto.css" rel="stylesheet">
+    <link href="../static/user/css/price-range.css" rel="stylesheet">
+    <link href="../static/user/css/animate.css" rel="stylesheet">
+	<link href="../static/user/css/main.css" rel="stylesheet">
+	<link href="../static/user/css/responsive.css" rel="stylesheet">
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		{% include 'includes/website_navbar.html' %}
+		
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="/"><img src="../static/user/images/home/logo.png" alt="" /></a>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+								{% if session.user_logged_in %}
+                                <li><a href="/user_account" class="active"><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                <li><a href="/user_logout"><i class="fa fa-lock"></i>Logout</a></li>
+                                {% else %}
+                                <li><a href="/user_register"><i class="fa fa-edit"></i>Register</a></li>
+								<li><a href="/user_login"><i class="fa fa-lock"></i>Login</a></li>
+                                {% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="/">Home</a></li>
+								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/products/1">Products</a></li>
+                                        {% if session.user_logged_in %}
+										<li><a href="/add_to_cart">Cart</a></li>
+                                        {% else %}
+										<li><a href="/user_register">Register</a></li>
+                                        <li><a href="/user_login">Login</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li> 
+
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="search_box pull-right">
+							<form action="{{url_for('user_search')}}" method="post">
+                                <input type="text" name="search" placeholder="Search" value="{{request.form.search}}" autocomplete="off">
+                            </form>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+	</header>
+
+	<section>
+		<div class="container">
+			<div class="row">
+            <div class="card">
+
+                <div class="card-body">
+                    {% include 'includes/_messages.html' %}
+                    <h3 class="text-center" style="margin-top: 0;">Hello {{ session['user_username'] }}</h3>
+                    <a href="{{ url_for('user_change_password') }}" class="btn btn-default"><i class="fa fa-user" aria-hidden="true"></i> &emsp; Change Account Password</a>
+                    <br>
+                    <br>
+                    <!-- Button trigger modal -->
+                    <button class="dropdown-item btn btn-danger" href="" data-toggle="modal" data-target="#delete_my_account">
+                        <i class="fa fa-trash-o"></i> &emsp; Delete My Account
+                    </button>
+
+                    <img src="../static/uploads/users/{{ session['user_username'] }}/{{ user_image }}" style="max-width: 20%; max-height: 20%; display: block; margin: -65px auto 65px; border-radius: 6px;">
+                    <form action="{{ url_for('user_profile_picture') }}" method="post" enctype="multipart/form-data" class="form-group">
+                        <input type="file" name="file" class="form-control" style="max-width: 20%; display: block; margin: 10px auto;">
+                        <input type="submit" value="Upload" class="btn btn-primary" style="display: block; margin: 25px auto 50px;">
+                    </form>
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Product Name</th>
+                            <th>Status</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Discount</th>
+                            <th>Total</th>
+                            <th>Order Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in orders %}
+                          <tr>
+                            <td>{{ order.product_name }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ order.quantity }}</td>
+                            <td>{{ order.price }}</td>
+                            <td>{{ order.discount }}</td>
+                            <td>{{ (order.price - order.discount) * order.quantity }}</td>
+                            <td>{{ order.order_date.strftime('%a, %d %b %Y %H:%M:%S') }}</td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                      <br>
+                      <br>
+                      <br>
+                      <br>
+                      <br>
+                      <br>
+                </div>
+            </div>
+
+
+				<div class="col-sm-12 padding-right">
+					<div class="features_items"><!--features_items-->
+
+					</div><!--features_items-->
+				</div>
+			</div>
+		</div>
+	</section>
+	
+    {% include 'includes/website_footer.html' %}
+
+
+    <!-- delete_my_account modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_my_account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Your Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete your account from the website and their files and product reviews ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_user_account') }}"><button class="btn btn-danger">Confirm Delete My Account</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <script src="../static/user/js/jquery.js"></script>
+	<script src="../static/user/js/price-range.js"></script>
+    <script src="../static/user/js/jquery.scrollUp.min.js"></script>
+	<script src="../static/user/js/bootstrap.min.js"></script>
+    <script src="../static/user/js/jquery.prettyPhoto.js"></script>
+    <script src="../static/user/js/main.js"></script>
+</body>
+</html>

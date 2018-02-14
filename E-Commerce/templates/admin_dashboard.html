@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin | Dashboard</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="../static/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="../static/css/fontastic.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="../static/vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="../static/css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="../static/css/custom.css">
+    <!-- Favicon-->
+{#    <link rel="shortcut icon" href="../static/favicon.png">#}
+{#    <!-- Tweaks for older IEs--><!--[if lt IE 9]>#}
+{#        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>#}
+{#        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->#}
+  </head>
+  <body>
+    <div class="page home-page">
+      <!-- Main Navbar-->
+      {% include 'includes/nav_bar.html' %}
+
+      <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="../static/uploads/users/{{ admin_name }}/{{ admin_image }}" class="img-fluid rounded-circle" style="width: 46px; height: 46px;"></div>
+            <div class="title">
+              <h1 class="h4">{{ admin_name }}</h1>
+              <p style="min-width: 164px; max-width: 195px;">Website Administrator</p>
+            </div>
+          </div>
+          <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+          <ul class="list-unstyled">
+            {% include 'includes/side_bar.html' %}
+          </ul>
+        </nav>
+        <div class="content-inner">
+          <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Admin Dashboard</h2>
+              <p class="lead">Hello {{ admin_name }}</p>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-gear" aria-hidden="true"></i> &ensp; Settings
+                </button>
+                <div class="dropdown-menu" style="padding: 12px; width: 320px;">
+                    <a href="/admin/upload_picture" class="dropdown-item" style="color: #796AEE;"><i class="fa fa-image" aria-hidden="true"></i> &ensp; Change Profile Picture</a>
+                    <a href="/admin/admin_change_password/" class="dropdown-item" style="color: #796AEE;"><i class="fa fa-user" aria-hidden="true"></i> &emsp; Change Account Password</a>
+                <div class="dropdown-divider"></div>
+{#                    <a href="/admin/delete_admin_account" class="dropdown-item" style="color: #dc3545;"><i class="fa fa-remove" aria-hidden="true"></i> &emsp; Delete My Account</a>#}
+                    <!-- Button trigger modal -->
+                    <a class="dropdown-item edit"  style="color: #dc3545;" href="" data-toggle="modal" data-target="#delete_admin_account">
+                      <i class="fa fa-remove"></i> &emsp; Delete My Account
+                    </a>
+                </div>
+                </div>
+
+{#              <button class="btn btn-primary account_settings" style="margin-bottom: -15px;"><i class="fa fa-gear" aria-hidden="true"></i> &ensp; Settings</button>#}
+{#              <br>#}
+{#              <a href="/admin/upload_picture" style="color: #796AEE; margin-top: 25px; display: none;" class="a1">Change Profile Picture</a>#}
+{#              <br>#}
+{#              <a href="/admin/admin_change_password/" style="color: #796AEE; display: none;" class="a2">Change Account Password</a>#}
+            </div>
+          </header>
+            <!-- start my dashboard 1 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  {% include 'includes/_messages.html' %}
+                  <div class="row bg-white has-shadow">
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/admin/add_product_slider" style="color: #17a2b8;"><div class="icon bg-info"><i class="fa fa-plus-circle" style="color: #fff; margin-top: 12px;"></i></div>
+                        <div class="title"><span>New<br>Slider</span></a>
+                          <div class="progress">
+{#                            <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="" aria-valuemin="0" aria-valuemax="10" class="progress-bar bg-info"></div>#}
+                          </div>
+                        </div>
+                        <div class="number" style="color: #17a2b8;"><strong>{{ count_sliders | safe }}</strong></div>
+                      </div>
+                    </div>
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                          <a href="/admin/add_product" style="color: #54e69d;"><div class="icon bg-green"><i class="fa fa-plus" style="margin-top: 12px;"></i></div>
+                        <div class="title"><span>New<br>Product</span></a>
+                          <div class="progress">
+    {#                        <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>#}
+                          </div>
+                        </div>
+                        <div class="number" style="color: #54e69d;"><strong>{{ count_products | safe }}</strong></div>
+                      </div>
+                      </div>
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/admin/add_category" style="color: #ffc36d;"><div class="icon bg-orange"><i class="fa fa-star-o" style="margin-top: 12px; margin-left: 1px;"></i></div>
+                        <div class="title"><span>Add<br>Category</span></a>
+                          <div class="progress">
+    {#                        <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>#}
+                          </div>
+                        </div>
+                          <div class="number" style="color: #ffc36d;"><strong>{{ count_categories | safe }}</strong></div>
+                      </div>
+                    </div>
+
+
+                    <!-- Item -->
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/admin/add_user" style="color: #796AEE;"><div class="icon bg-violet"><i class="fa fa-user-plus" style="margin-left: 5px; margin-top: 11px;"></i></div>
+                        <div class="title"><span>Create<br>Account</span></a>
+                          <div class="progress">
+    {#                        <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>#}
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>{{ count_users | safe }}</strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 1 -->
+
+
+
+
+
+
+            <!-- start my dashboard 2 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  <div class="row bg-white has-shadow">
+
+                      <!-- Item -->
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production_slider/{{ slider_saled.id }}" style="color: #54e69d;">
+                        <div class="title"><span>Slider<br>Top Sale</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #54e69d;"><strong>
+                            {% if not slider_saled.number_of_sales %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_saled.number_of_sales | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                          <a href="/preview_production_slider/{{ slider_saled_low.id }}" style="color: #dc3545;">
+                        <div class="title"><span>Slider<br>Low Sale</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #dc3545;"><strong>
+                            {% if not slider_saled_low.number_of_sales %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_saled_low.number_of_sales | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                      </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production/{{ product_saled.id }}" style="color: #54e69d;">
+                        <div class="title"><span>Product<br>Top Sale</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                          <div class="number" style="color: #54e69d;"><strong>
+                            {% if not product_saled.number_of_sales %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ product_saled.number_of_sales | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production/{{ product_saled_low.id }}" style="color: #dc3545;">
+                        <div class="title"><span>Product<br>Low Sale</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #dc3545;"><strong>
+                            {% if not product_saled_low.number_of_sales %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ product_saled_low.number_of_sales | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 2 -->
+
+
+
+
+
+
+           <!-- start my dashboard 3 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  <div class="row bg-white has-shadow">
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                          <a href="/preview_production_slider/{{ slider_big.id }}" style="color: #54e69d;">
+                        <div class="title"><span>Slider<br>High Rate</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #54e69d;"><strong>
+                            {% if not slider_big.rate %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_big.rate | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                      </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production_slider/{{ slider_small.id }}" style="color: #dc3545;">
+                        <div class="title"><span>Slider<br>Low Rate</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #dc3545;"><strong>
+                            {% if not slider_small.rate %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_small.rate | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+
+                    <!-- Item -->
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production/{{ product_small.id }}" style="color: #54e69d;">
+                        <div class="title"><span>Product<br>High Rate</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #54e69d;"><strong>
+                            {% if not product_big.rate %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ product_big.rate | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <a href="/preview_production/{{ product_big.id }}" style="color: #dc3545;">
+                        <div class="title"><span>Product<br>Low Rate</span></a>
+                          <div class="progress">
+                          </div>
+                        </div>
+                          <div class="number" style="color: #dc3545;"><strong>
+                              {% if not product_small.rate %}
+                              {{ 0 }}
+                              {% else %}
+                              {{ product_small.rate | safe }}
+                              {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 3 -->
+
+
+
+
+
+            <!-- start my dashboard 4 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  <div class="row bg-white has-shadow">
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <div class="title"><span>Sliders<br>Last Week</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>{{ slider_add | safe }}</strong></div>
+                      </div>
+                      </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+
+                        <div class="title"><span>Products<br>Last Week</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>{{ product_add | safe }}</strong></div>
+                      </div>
+                    </div>
+
+                    <!-- Item -->
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+
+                        <div class="title"><span>Sliders Last<br>Week Sales</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>
+                            {% if slider_last_week == None %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ slider_last_week | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+
+                    <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+
+                        <div class="title"><span>Products Last<br>Week Sales</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                          <div class="number" style="color: #796AEE;"><strong>
+                              {% if product_last_week == None %}
+                              {{ 0 }}
+                              {% else %}
+                              {{ product_last_week | safe }}
+                              {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 4 -->
+
+
+
+
+            <!-- start my dashboard 5 -->
+            <section class="dashboard-counts no-padding-bottom">
+                <div class="container-fluid">
+                  <div class="row bg-white has-shadow">
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <div class="title"><span>Slider<br>Total Sales</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>
+                            {% if count_number_of_sales_slider == None %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ count_number_of_sales_slider | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                      </div>
+
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <div class="title"><span>Product<br>Total Sales</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                        <div class="number" style="color: #796AEE;"><strong>
+                            {% if count_number_of_sales == None %}
+                            {{ 0 }}
+                            {% else %}
+                            {{ count_number_of_sales | safe }}
+                            {% endif %}</strong></div>
+                      </div>
+                    </div>
+
+                      <!-- Item -->
+                      <div class="col-xl-3 col-sm-6">
+                      <div class="item d-flex align-items-center">
+                        <div class="title"><span>Total<br>AVG Rate</span>
+                          <div class="progress">
+                          </div>
+                        </div>
+                          <div class="number" style="color: #796AEE;"><strong>
+                              {% if total_avg_rate == None %}
+                              {{ 0 }}
+                              {% else %}
+                              {{ total_avg_rate | round(2, 'common') | safe }}
+                              {% endif %}
+                              </strong></div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+            </section>
+            <!-- end my dashboard 5 -->
+
+
+
+
+
+
+
+
+
+
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          {% include 'includes/footer.html' %}
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- delete Admin account modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="delete_admin_account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="border-radius: 6px;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete My Account</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete your account from the website permanently ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <a href="{{ url_for('delete_admin_account') }}"><button class="btn btn-danger">Confirm Delete Permanently</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Javascript files-->
+{#    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>#}
+    <script src="../static/js/jquery-3.2.1.min.js"></script>
+    <script src="../static/vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="../static/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="../static/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../static/https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="../static/js/charts-home.js"></script>
+    <script src="../static/js/front.js"></script>
+{#    <script>#}
+{#      $(document).ready(function () {#}
+{#          $("button.account_settings").click(function () {#}
+{#              $("a.a1").fadeToggle(500);#}
+{#              $("a.a2").fadeToggle(500);#}
+{#          });#}
+{#      });#}
+{#    </script>#}
+  </body>
+</html>

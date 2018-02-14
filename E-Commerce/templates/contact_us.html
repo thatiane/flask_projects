@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link href="../static/i.ico" rel="icon">
+    <link href="../static/user/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/user/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../static/user/css/prettyPhoto.css" rel="stylesheet">
+    <link href="../static/user/css/price-range.css" rel="stylesheet">
+    <link href="../static/user/css/animate.css" rel="stylesheet">
+	<link href="../static/user/css/main.css" rel="stylesheet">
+	<link href="../static/user/css/responsive.css" rel="stylesheet">
+</head><!--/head-->
+
+<body>
+	<header id="header"><!--header-->
+		{% include 'includes/website_navbar.html' %}
+
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="/"><img src="../static/user/images/home/logo.png" alt="" /></a>
+						</div>
+
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+                                {% if session.user_logged_in %}
+								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
+								<li><a href="/add_to_cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                {% else %}
+								<li><a href="/user_register"><i class="fa fa-edit"></i>Register</a></li>
+                                <li><a href="/user_login"><i class="fa fa-lock"></i>Login</a></li>
+                                {% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="/">Home</a></li>
+								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/products/1">Products</a></li>
+                                        {% if session.user_logged_in %}
+										<li><a href="/add_to_cart">Cart</a></li>
+                                        {% else %}
+										<li><a href="/user_register">Register</a></li>
+                                        <li><a href="/user_login">Login</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->
+
+	<section><!--form-->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="signup-form"><!--sign up form-->
+						<h2>Contact Us!</h2>
+						{% include 'includes/_messages.html' %}
+                        {% from "includes/_formhelpers.html" import render_field %}
+                        <form action="{{ url_for('contact_us') }}" method="post">
+                            <div class="form-group">
+                                {{ render_field(form.name, class="form-control", autocomplete="off") }}
+                            </div>
+                            <div class="form-group">
+                                {{ render_field(form.mobile_phone, class="form-control", autocomplete="off") }}
+                            </div>
+{#                            <div class="form-group">#}
+{#                                {{ render_field(form.email, class="form-control", autocomplete="off") }}#}
+{#                            </div>#}
+                            <div class="form-group">
+                                <label>E-Mail</label>
+                                <input type="email" name="email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                {{ render_field(form.message, class="form-control", rows="6", autocomplete="off", style="background-color: #F0F0E9; border: medium none;") }}
+                            </div>
+                            <input type="submit" value="Send" class="btn btn-primary" style="max-width: 20%; color: #fff;">
+                        </form>
+                        <br>
+                        <br>
+                        <p style="margin-top: 10px;">Do not have an account ? &ensp; <a href="/user_register">Create Account</a></p>
+                        <p style="margin-top: 10px; margin-bottom: 200px;">Forget Password ? &ensp; <a href="/user_forget_password">Reset Your Password</a></p>
+					</div><!--/sign up form-->
+				</div>
+			</div>
+		</div>
+	</section><!--/form-->
+
+    {% include 'includes/website_footer.html' %}
+
+
+    <script src="../static/user/js/jquery.js"></script>
+	<script src="../static/user/js/price-range.js"></script>
+    <script src="../static/user/js/jquery.scrollUp.min.js"></script>
+	<script src="../static/user/js/bootstrap.min.js"></script>
+    <script src="../static/user/js/jquery.prettyPhoto.js"></script>
+    <script src="../static/user/js/main.js"></script>
+</body>
+</html>
