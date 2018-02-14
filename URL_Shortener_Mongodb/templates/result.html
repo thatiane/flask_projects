@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Result</title>
+{#        <link rel="shortcut icon" href="../static/g.ico">#}
+    </head>
+    <body>
+        {% block body %}
+            <h2>Result</h2>
+                {{short_link._id}}
+                <br>
+                {{short_link.original_link}}
+                <br>
+                {{short_link.short_link}}
+                <br>
+                {{ short_link.process_date.strftime('%a, %d %b %Y %H:%M:%S') }}
+        {% endblock %}
+    </body>
+</html>
