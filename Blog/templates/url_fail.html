@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+{#        <link rel="shortcut icon" href="../static/g.ico">#}
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <div class="container">
+                <h1>No Result</h1>
+                    {% if msg %}
+                        <h1>{{msg}}</h1>
+                    {% endif %}
+            </div>
+        {% endblock %}
+    </body>
+</html>

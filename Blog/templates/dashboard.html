@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .btn-success{
+                position: relative;
+                left: 959px;}
+            .btn-danger{
+                position: relative;
+                left: 8px;}
+            .deleteaccountform{
+                display: inline;}
+            .deleteaccount{
+                position: relative;
+                left: -58px;}
+            .deleteallarticles{
+                top: 232px;
+                left: 695px;}
+            .fileupload{
+                position: relative;
+                left: 375px;
+                top: 6px;
+                max-width: 366px;}
+            .fileupload > input[type=file]{
+                display: inline;}
+            .turnlink{
+                position: relative;
+                left: 472px;}
+            .filedelete{
+                position: relative;
+                bottom: 29px;
+                left: 737px;
+                max-width: 0;}
+            .profile-picture{
+                background-image: url("../static/default.png");
+                background-size: 80%;
+                background-position: center;
+                background-repeat: no-repeat;
+                min-height: 171px;}
+        </style>
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <h2>Article Dashboard <small>&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Welcome {{session.username}}</small></h2>
+            <h4><small><p class="text-center"> &ensp; &ensp; you registered in : {{ session.register_date.strftime('%a, %d %b %Y %H:%M:%S') }}</p></small></h4>
+            <a class="btn btn-success" href="/add_article"> Add Article</a>
+            <form action="{{url_for('delete_account', username=session.username)}}" method="post" class="deleteaccountform">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="Delete Your Account" class="btn btn-danger deleteaccount">
+            </form>
+            <form action="{{url_for('delete_all_articles', username=session.username)}}" method="post" class="deleteaccountform">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="submit" value="Delete All Articles" class="btn btn-danger deleteallarticles">
+            </form>
+            <a href="{{ url_for('profile_picture', pic=art.files) }}" target="_blank"><img src="../../static\uploads\users\{{ username }}\profile_picture\{{ art.files }}" style="max-width: 15%; max-height: 171px; border-radius: 50%; margin: 0 auto 20px; display: block; height: auto; padding: 4px; line-height: 1.42857143; background-color: #fff; border: 1px solid #ddd; transition: all .2s ease-in-out;" class="profile-picture"></a>
+            <form method=post enctype=multipart/form-data action="{{url_for('upload_file')}}" class="fileupload">
+                <input type=file name=file class="btn btn-default ">
+                <input type=submit value=Upload class="btn btn-default">
+            </form>
+            <form action="{{url_for('delete_file')}}" method="post" class="filedelete">
+                <input type="hidden" name="_method" value="Delete File">
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+            <hr>
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>picture</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for article in articles %}
+                <tr>
+                    <td><a href="article/{{article.id}}">{{article.id}}</a></td>
+                    <td><a href="search_by_categories/{{ article.category | safe }}">{{ article.category }}</a></td>
+                    <td><a href="article_picture/{{ article.id }}/{{ article.files }}" target="_blank"><img style="max-height: 34px; max-width: 34px; border-radius: 50%;" src="../../static\uploads\users\{{ article.author }}\articles\article{{ article.id }}\{{ article.files }}"></a></td>
+                    <td><a href="article/{{article.id}}">{{article.title}}</a></td>
+                    <td><a href="article/{{article.id}}">{{article.author}}</a></td>
+                    <td>{{article.written_date.strftime('%a, %d %b %Y %H:%M:%S')}}</td>
+                    <td><a href="edit_article/{{article.id}}" class="btn btn-default pull-right">Edit</a></td>
+                    <td>
+                        <form action="{{url_for('delete_article', id=article.id)}}" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+            <a class="btn btn-default lead turnlink" href="/upload">turn to upload page &#8811;</a>
+            <br>
+            <br>
+            <a class="btn btn-default lead turnlink" href="/upload_file_locally">turn to upload file localy &#8811;</a>
+            <br>
+            <br>
+            <a class="btn btn-default lead turnlink" href="/searches">turn to searches page &#8811;</a>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        {% endblock %}
+    </body>
+</html>
+
+{#{{ session.strftime('%Y-%m-%d') }}#}

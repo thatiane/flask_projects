@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .ds{
+                width: 18px;
+                position: relative;
+                left: 20px;
+                height: 32px;
+            }
+            .ds:after{
+                content:"Author";
+                position: relative;
+                left: 26px;
+                top: 7px;
+                font-size: 18px;
+            }
+            .dss{
+                width: 18px;
+                position: relative;
+                left: 20px;
+                height: 32px;
+            }
+            .dss:after{
+                content:"Title";
+                position: relative;
+                left: 26px;
+                top: 7px;
+                font-size: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <br>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Search In &ensp;
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><form class="navbar-form navbar-left" method="post" action="{{url_for('search_title')}}">
+                            <div class="form-group">
+                                <input name="search" type="text" class="form-control" placeholder="Article Title" value="{{request.form.search}}" autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn btn-default">Search Title</button>
+                        </form>
+                    </li>
+                    <li><form class="navbar-form navbar-left" method="post" action="{{url_for('search_author')}}">
+                            <div class="form-group">
+                                <input name="search" type="text" class="form-control" placeholder="Article Author" value="{{request.form.search}}" autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn btn-default">Search Author</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <form class="navbar-form navbar-left" action="{{url_for('search_author')}}" method="post">
+                    <div class="form-group">
+                        <input name="search" type="text" class="form-control" placeholder="Search In Article Author" value="{{request.form.search}}" autocomplete="off">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search Article Author</button>
+            </form>
+            <form class="navbar-form navbar-left" action="{{url_for('search_title')}}" method="post">
+                    <div class="form-group">
+                        <input name="search" type="text" class="form-control" placeholder="Search In Article Title" value="{{request.form.search}}" autocomplete="off">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search Article Title</button>
+            </form>
+            <br>
+            <br>
+            <br>
+            <br>
+        <div class="input-group" style="max-width: 40%;">
+            <form class="navbar-form navbar-left" method="post" action="{{url_for('search_drop_down')}}" style="display: flex;">
+                <select class="btn btn-default dropdown-toggle" name="search_type" style="margin-right: -2px; border-radius: 4px 0px 0px 4px;">
+                    <option value="author">Author</option>
+                    <option value="title">Title</option>
+                </select>
+                <input name="search" type="text" class="form-control" placeholder="Search" value="search" autocomplete="off">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">Search</button>
+                </span>
+            </form>
+        </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Search In &ensp;
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><input type="radio" name="search_option" value="search_author" class="ds"></li>
+                        <li><input type="radio" name="search_option" value="search_title" class="dss"></li>
+                        {% if request['search_option'] == search_author %}
+                            <form class="navbar-form navbar-left" method="post" action="{{url_for('search_author')}}">
+                                <input name="search" type="text" class="form-control" placeholder="Article Author" value="{{request.form.search}}" autocomplete="off">
+                                <button type="submit" class="btn btn-default">Search Author</button>
+                            </form><br>
+                        {% else %}
+                            <form class="navbar-form navbar-left" method="post" action="{{url_for('search_title')}}">
+                                <input name="search" type="text" class="form-control" placeholder="Article Title" value="{{request.form.search}}" autocomplete="off">
+                                <button type="submit" class="btn btn-default">Search Title</button>
+                            </form>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+{#<option value="" style="display: none;" disabled selected>Search in</option>#}
+        {% endblock %}
+    </body>
+</html>

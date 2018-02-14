@@ -1,0 +1,63 @@
+/* from _navbar.html */
+.navbar-nav .btn-primary{
+    margin-top: 7px;
+    position: relative;
+    left: 230px;
+}
+
+.navbar-nav .btn-success{
+    margin-top: 7px;
+    position: relative;
+    left: 232px;
+    bottom: 0;
+}
+
+.nav>li{
+    right: 190px;
+}
+
+/*.dashbton{*/
+    /*left: 410px;*/
+    /*top: 12px;*/
+/*}*/
+/*.logoutbton{*/
+    /*left: 422px;*/
+    /*top: 12px;*/
+/*}*/
+
+/* from _navbar.html */
+.navbar-collapse .navbar-right .logoutbton:hover{
+    background-color: #cd413e;
+}
+
+/* from home.html & about.html */
+.container .jumbotron, .container-fluid .jumbotron{
+    border-radius: 35px;
+}
+/* from register.html & login.html */
+.formapp{
+    width: 39%;
+}
+
+@media (max-width: 767px) {
+    .nav>li{
+        right:0;
+    }
+    .navbar-nav{
+        margin: 7.5px 0;
+    }
+    .navbar-nav .btn-primary{
+        left: 15px;
+    }
+    .navbar-nav .btn-success{
+        left: 20px;
+    }
+    .nav .text-center{
+        text-align: left;
+    }
+}
+
+/*.navbar-form {*/
+    /*position: relative;*/
+    /*left: 100px;*/
+/*}*/

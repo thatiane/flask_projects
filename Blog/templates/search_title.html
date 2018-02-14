@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% extends "layout.html" %}
+        {% block body %}
+            <h2 class="text-center"><b>Article(s)</b></h2>
+            <h3 class="text-center">Total Article Title(s) : {{ articles|length }} Title(s)</h3>
+            {% for article in articles %}
+                <a href="article/{{ article.id }}" ><h4>{{article.title}}</h4></a>
+                <br>
+            {% endfor %}
+        {% endblock %}
+</body>
+</html>

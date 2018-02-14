@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .fileupload{
+                position: relative;
+                left: 705px;
+                top: 54px;
+                max-width: 366px;}
+            .fileupload > input[type=file]{
+                display: inline;}
+            .filedelete{
+                right: 112px;
+                position: absolute;
+                top: 174px;
+            }
+        </style>
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <h1 style="margin-bottom: -12px;">Edit Article</h1>
+            {% from "includes/_formhelpers.html" import render_field %}
+            <form method="post" enctype="multipart/form-data" action="{{ url_for('upload_file_article') }}" class="fileupload">
+                    <input type="file" name="file" class="btn btn-default ">
+                    <input type="submit" value="Upload" class="btn btn-default">
+            </form>
+            <form action="{{url_for('delete_article_file')}}" method="post" class="filedelete">
+                <input type="hidden" name="_method" value="Delete File">
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+            <form method="POST" action="">
+                <p style="margin: -50px 511px 6px; position: relative; top: 46px; font-weight: 700;">Article Category :</p>
+                <select class="btn btn-default dropdown-toggle" name="categories" style="margin: -50px 509px 0; min-width: 118px; position: relative; top: 76px;">
+                    {% include 'includes/select.html' %}
+                </select>
+                <div class="form-group">
+                    {{ render_field(form.title, class_="form-control formapp", autocomplete="off") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.body, class_="form-control", autocomplete="off", id="editor") }}
+                </div>
+                <p><input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+        {% endblock %}
+    </body>
+</html>

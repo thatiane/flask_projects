@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>OSAMA's Blog</title>
+        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../static/css/style.css" rel="stylesheet">
+{#        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">#}
+    </head>
+    <body>
+        {% include 'includes/_navbar.html' %}
+        <div class="container">
+            {% include 'includes/_messages.html' %}
+            {% block body %}{% endblock %}
+        </div>
+        <script src="../static/js/jquery-3.2.1.min.js"></script>
+        <script src="../static/js/bootstrap.min.js"></script>
+        <script src="../static/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript">CKEDITOR.replace('editor')</script>
+{#        <script src="//cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>#}
+{#        <script src="//cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>#}
+{#        <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>#}
+{#        <script type="text/javascript">CKEDITOR.replace('editor')</script>#}
+    </body>
+</html>

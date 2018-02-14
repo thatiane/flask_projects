@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% extends "layout.html" %}
+        {% block body %}
+            <h2 class="text-center"><b>Author(s)</b></h2>
+            <h3 class="text-center">Total Author(s) : {{ articles|length }} Author(s)</h3>
+            {% for article in articles %}
+                <h4>{{article.author}}</h4>
+                <br>
+            {% endfor %}
+        {% endblock %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+        <div class="jumbotron text-center">
+            <h1>Welcome To My Flask App Website ^_^</h1>
+            <p class="lead">This application is built with the Python Flask framework & bootstrap and is the focus for the power of "Python Flask" framework</p>
+            {% if session.logged_in == NULL %}
+                <a href="/register" class="btn btn-primary btn-lg">Register</a>
+                &emsp;
+                <a href="/login" class="btn btn-success btn-lg">Login</a>
+            {% endif %}
+        <form method="post" action="{{ url_for('result') }}">
+            <input type="url" name="url" class="form-control text-center" value="{{request.form.url}}" placeholder="Your original URL here" style="margin: 20px auto 10px; width: 45%;" autocomplete="off">
+            <input type="submit" class="btn btn-info" value="Shorten URL">
+        </form>
+        <a href="/forget_password" class="btn btn-danger" style="margin-top: 10px;">Forget Password</a>
+        </div>
+        {% endblock %}
+    </body>
+</html>

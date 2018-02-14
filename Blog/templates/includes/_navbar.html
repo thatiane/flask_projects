@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">OSAMA Mohamed</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav  navbar-right">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About Me</a></li>
+                <li><a href="/articles">Articles</a></li>
+            </ul>
+            {% if session.logged_in %}
+                <form class="navbar-form navbar-left" action="{{url_for('search')}}" method="post">
+                    <div class="form-group">
+                        <input name="search" type="text" class="form-control" placeholder="Search by id, title, author" value="{{request.form.search}}" autocomplete="off" autofocus="on">
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+            {% endif %}
+            <ul class="nav navbar-nav navbar-right">
+                {% if session.logged_in %}
+                    <li><a class="btn btn-default dashbton" href="/dashboard" style="padding-bottom: 5px; padding-top: 5px; left: 410px; top: 9px;">Dashboard</a></li>
+                    <li><a class="btn btn-danger logoutbton" href="/logout" style="padding-bottom: 5px; padding-top: 5px; left: 422px; top: 9px; color: #fff;">Logout</a></li>
+                {% else %}
+                <div class="text-center">
+                    <a class="btn btn-primary" href="/register">Register</a>
+                    <a class="btn btn-success" href="/login">Login</a>
+                </div>
+                {% endif %}
+            </ul>
+        </div>
+      </div>
+    </nav>
+</body>
+</html>

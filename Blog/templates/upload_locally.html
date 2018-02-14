@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .fileupload{
+                position: relative;
+                left: 375px;
+                top: 6px;
+                max-width: 366px;}
+            .fileupload > input[type=file]{
+                display: inline;}
+        </style>
+    </head>
+    <body>
+    {% extends 'layout.html' %}
+        {% block body %}
+            <form method=post enctype=multipart/form-data action="{{url_for('upload_file_locally')}}" class="fileupload">
+                <input type=file name=file class="btn btn-default ">
+                <input type=submit value=Upload class="btn btn-default">
+            </form>
+        {% endblock %}
+    </body>
+</html>

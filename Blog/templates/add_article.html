@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .fileupload{
+                position: relative;
+                left: 570px;
+                top: 59px;}
+        </style>
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <h1 style="margin-bottom: -21px;">Add Article</h1>
+            {% from "includes/_formhelpers.html" import render_field %}
+            <form method="POST" action="">
+                <p style="font-weight: 700; margin-bottom: 6px; position: relative; top: 58px; left: 512px; max-width: 290px;">Add Article in Category :</p>
+                <select class="btn btn-default dropdown-toggle" name="categories" style="min-width: 165px; position: relative; top: 58px; left: 510px;">
+                    {% include 'includes/select.html' %}
+                </select>
+                <input type="file" name="file" class="btn btn-default fileupload" style="display: inline-block;">
+                <div class="form-group">
+                    {{ render_field(form.title, class_="form-control formapp", autocomplete="off") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.body, class_="form-control", autocomplete="off", id="editor") }}
+                </div>
+                <p><input class="btn btn-primary" type="submit" value="Submit">
+            </form>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+{#        <link rel="shortcut icon" href="../static/g.ico">#}
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <div class="container">
+                <h1>Result</h1>
+                    Id &emsp;: {{short_link.id}}
+                    <br>
+                    <br>
+                    Original Link &emsp;:  {{short_link.original_link}}
+                    <br>
+                    <br>
+                    Short Link &emsp;: {{short_link.short_link}}
+                    <br>
+                    <br>
+                    Process Time &ensp;: {{ short_link.process_date.strftime('%a, %d %b %Y %H:%M:%S') }}
+                <br>
+                <br>
+                <a href="/redirect/{{short_link.short_link}}" class="btn btn-info">Redirect To Link</a>
+            </div>
+        {% endblock %}
+    </body>
+</html>

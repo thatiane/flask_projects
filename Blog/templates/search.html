@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        {% extends "layout.html" %}
+        {% block body %}
+{#            <h2 class="text-center"><b>Articles</b></h2>#}
+            <h3 class="text-center">Result : {{ articles|length }} Article(s)</h3>
+            {% for article in articles %}
+                <h1>{{article.id}} &xrarr; {{article.title}}</h1>
+                <h1>{{article.title}}</h1>
+                <small>Written by : {{article.author}}
+                    &emsp; in : {{article.written_date.strftime('%a, %d %b %Y %H:%M:%S')}}</small>
+                <hr>
+                <img src="../../static\uploads\users\{{ article.author |safe}}\articles\article{{ article.id }}\{{ article.files }}" style="max-width: 25%; border-radius: 6px; margin: 0 auto 25px; display: block;">
+                <div>
+                    {{article.body | safe}}
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            {% endfor %}
+        {% endblock %}
+    </body>
+</html>
+
+
+
+{# start working#}
+
+{#        {% for article in articles %}#}
+{#            <h1>{{article.id}} &xrarr; {{article.title}}</h1>#}
+{#            <small>Written by : {{article.author}} &emsp; in : {{article.written_date.strftime('%a, %d %b %Y %H:%M:%S')}}</small>#}
+{#            <hr>#}
+{#            <div>#}
+{#                {{article.body | safe}}#}
+{#            </div>#}
+{#            <br>#}
+{#            <br>#}
+{#            <br>#}
+{#            <br>#}
+{#            <br>#}
+{#            <br>#}
+{#        {% endfor %}#}
+
+{#            <ul class="list-group">#}
+{#                {% for article in articles %}#}
+{#                    <h1>{{ article.id }} {{article.title}}</h1>#}
+{#                    {{ article.author }}#}
+{#                    {{ article.written_date }}#}
+{#                    <div>#}
+{#                        {{article.body | safe}}#}
+{#                    </div>#}
+{#                    {{ article.files }}#}
+{#                {% endfor %}#}
+{#            </ul>#}
+
+{#            <ul class="list-group">#}
+{#                {% for article in articles %}#}
+{#                    <h1>{{article.title}}</h1>#}
+{#                    <div>#}
+{#                        {{article.body | safe}}#}
+{#                    </div>#}
+{#                    {{ article.author }}#}
+{#                    <tr>#}
+{#                        <td>{{ article[0] }}</td>#}
+{#                        <td>{{ article[1] }}</td>#}
+{#                        <td>{{ article[2] }}</td>#}
+{#                        <td>{{ article[3] }}</td>#}
+{#                        <td>{{ article[4] }}</td>#}
+{#                        <td>{{ article[5] }}</td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+
+{#{% for message in get_flashed_messages() %}#}
+{#    <div class=flash>#}
+{#        {{ message }}#}
+{#    </div>#}
+{#{% endfor %}#}
+{# end working#}
+
+
+
+{#        <div class="search">#}
+{#            <form href="/search" method=post>#}
+{#                <input type=text name=search value="{{ request.form.search}}">#}
+{#                <br>#}
+{#                <div class="actions">#}
+{#                    <input type=submit value="Search">#}
+{#                </div>#}
+{#            </form>#}
+{#        </div>#}

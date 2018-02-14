@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8">
+                    <h1>Articles</h1>
+                    <h4>Total Articles : {{ articles|length }}</h4>
+                        <ul class="list-group">
+                            {% for article in articles %}
+                                <li class="list-group-item"><a href="article/{{article.id}}">{{article.id}}</a>&emsp; &xrarr; &emsp;<a href="article/{{article.id}}">{{article.title}}</a>
+                                    <br>&emsp; Created in : {{ article.written_date.strftime('%a, %d %b %Y %H:%M:%S') }}
+                                    &emsp; By : {{ article.author }} &emsp; Category : <a href="search_by_categories/{{ article.category | safe }}">{{ article.category }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <h1>Articles by Category :</h1>
+                        <form class="navbar-form navbar-left" method="post" action="{{url_for('categories')}}" style="display: flex; margin-top: 29px;">
+                            <select class="btn btn-default dropdown-toggle" name="categories" style="border-radius: 4px 0px 0px 4px; min-width: 260px;">
+                                {% include 'includes/select.html' %}
+                            </select>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default">Go!</button>
+                            </span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    </body>
+</html>
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#    <head>#}
+{#        <meta charset="UTF-8">#}
+{#        <style>#}
+{#            .list-group{#}
+{#                width: 60%;#}
+{#            }#}
+{#        </style>#}
+{#    </head>#}
+{#    <body>#}
+{#        {% extends 'layout.html' %}#}
+{#        {% block body %}#}
+{#            <h2>Articles &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; Articles by Category :</h2>#}
+{#            <h4 style="margin-left: 275px;">Total Articles : {{ articles|length }}</h4>#}
+{#            <div class="container">#}
+{#            <ul class="list-group">#}
+{#                {% for article in articles %}#}
+{#                    <li class="list-group-item"><a href="article/{{article.id}}">{{article.id}}</a>&emsp; &xrarr; &emsp;<a href="article/{{article.id}}">{{article.title}}</a>#}
+{#                        <br>&emsp; Created in : {{ article.written_date.strftime('%a, %d %b %Y %H:%M:%S') }}#}
+{#                        &emsp; By : {{ article.author }} &emsp; Category : {{article.category}}#}
+{#                    </li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#            <form class="navbar-form navbar-left" method="post" action="{{url_for('categories')}}" style="display: block; position: relative; top: -822px; left: 724px;">#}
+{#                <select class="btn btn-default dropdown-toggle" name="categories" style="border-radius: 4px 0px 0px 4px; min-width: 240px; padding: 7px;">#}
+{#                    {% include 'includes/select.html' %}#}
+{#                </select>#}
+{#                <span class="input-group-btn" style="top: -34px; left: 240px; max-width: 0;">#}
+{#                    <button type="submit" class="btn btn-default">Go!</button>#}
+{#                </span>#}
+{#            </form>#}
+{#            </div>#}
+{#        {% endblock %}#}
+{#    </body>#}
+{#</html>#}
+{#&minus; &#x2236;  &xmap;  &xrArr;#}

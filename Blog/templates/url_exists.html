@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <div class="container">
+                <h1>Result</h1>
+                    <h3>The url is Already Exists</h3>
+                    Id &emsp;: {{sl2.id}}
+                    <br>
+                    <br>
+                    Original Link &emsp;: {{sl2.original_link}}
+                    <br>
+                    <br>
+                    Short Link &emsp;: {{sl2.short_link}}
+                    <br>
+                    <br>
+                    Process Time &ensp;: {{ sl2.process_date.strftime('%a, %d %b %Y %H:%M:%S') }}
+                <br>
+                <br>
+                <a href="/redirect/{{sl2.short_link}}" class="btn btn-info">Redirect To Link</a>
+            </div>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <div class="jumbotron">
+                <h1 class="text-center">About Me</h1>
+                <h1 class="text-center">^_^</h1>
+                <img src="../../static\uploads\{{ article.picture }}" style="max-width: 20%; border-radius: 50%; position: absolute; top: 280px; right: 160px; padding: 12px; background-color: #fff; border: 1px solid #ddd;">
+                <p class="lead text-uppercase text-weight-bold">my name is <strong>osama mohamed</strong></p>
+                <p class="lead text-capitalize">i'm 22 years old</p>
+                <p class="lead text-capitalize">i live in fayoum city</p>
+                <p class="lead text-uppercase">egypt</p>
+                <p class="lead"><strong>01066446642</strong></p>
+            </div>
+        {% endblock %}
+    </body>
+</html>

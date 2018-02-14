@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .fileupload{
+                position: relative;
+                left: 400px;
+                top: 6px;
+                max-width: 366px;}
+            .fileupload > input[type=file]{
+                display: inline;}
+            .custom-file{
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                height: 34px;
+                width: 150px;
+                position: relative;
+                z-index: 1;
+                display: inline-block;
+                top: 28px;
+                cursor: pointer;
+            }
+            .custom-file:hover {
+                color: #333;
+                background-color: #e6e6e6;
+                border-color: #adadad;
+                cursor: pointer;
+                }
+            .custom-file span{
+                font-family: inherit;
+                font-size: 14px;
+                padding: 6px 12px;
+                display: block;
+                z-index: 2;
+                line-height: inherit;
+                text-align: center;
+                cursor: pointer;
+            }
+            .custom-file input[type="file"]{
+                height: 100%;
+                width: 100%;
+                z-index: 3;
+                opacity: 0;
+                position: relative;
+                top: -32px;
+                cursor: pointer;
+
+            }
+            .filedelete2{
+                position: relative;
+                bottom: 25px;
+                left: 740px;
+                max-width: 0;
+            }
+            .filedelete{
+                position: relative;
+                bottom: 29px;
+                left: 770px;
+                max-width: 0;
+            }
+            .filedelete3{
+                position: relative;
+                bottom: 28px;
+                left: 629px;
+                max-width: 0;
+            }
+            {# start input file button from eslam nasser#}
+            .eslam_nasser> input[type="file"] {
+                display: none;
+            }
+
+            .btn {
+                cursor: pointer;
+            }
+            {# end input file button from eslam nasser#}
+        </style>
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <h1>Upload New File To Your Account</h1>
+            <br>
+            <hr>
+            <form method=post enctype=multipart/form-data class="fileupload">
+                <input type=file name=file>
+                <input type=submit value=Upload>
+            </form>
+            <form action="{{url_for('delete_file')}}" method="post" class="filedelete2">
+                <input type="hidden" name="_method" value="Delete File">
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+            <br>
+            <br>
+            <form method=post enctype=multipart/form-data action="{{url_for('upload_file')}}" class="fileupload">
+                <input type=file name=file class="btn btn-default ">
+                <input type=submit value=Upload class="btn btn-default">
+            </form>
+            <form action="{{url_for('delete_file')}}" method="post" class="filedelete">
+                <input type="hidden" name="_method" value="Delete File">
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+            <br>
+            <form method=post enctype=multipart/form-data action="{{url_for('upload_file')}}" class="fileupload">
+                <div class="custom-file">
+                    <span>Choose File</span>
+                    <input type="file" name=file>
+                </div>
+                <input type=submit value=Upload class="btn btn-default">
+            </form>
+            <form action="{{url_for('delete_file')}}" method="post" class="filedelete3">
+                <input type="hidden" name="_method" value="Delete File">
+                <input type="submit" value="Delete" class="btn btn-danger">
+            </form>
+            <div class="eslam_nasser">
+                <div class="btn btn-primary" id="openInput">Choose file</div>
+                <input type="file" id="input">
+            </div>
+            <script src="../static/js/eslam_nasser.js"></script>
+        {% endblock %}
+    </body>
+</html>

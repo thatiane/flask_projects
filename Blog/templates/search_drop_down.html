@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        {% extends "layout.html" %}
+        {% block body %}
+{#            <h2 class="text-center"><b>Articles</b></h2>#}
+            <h3 class="text-center">Result : {{ articles|length }} Article(s)</h3>
+            {% for article in articles %}
+                <h1>{{article.id}} &xrarr; {{article.title}}</h1>
+                <h1>{{article.title}}</h1>
+                <small>Written by : {{article.author}}
+                    &emsp; in : {{article.written_date.strftime('%a, %d %b %Y %H:%M:%S')}}</small>
+                <hr>
+                <img src="../../static\uploads\users\{{ article.author |safe}}\articles\article{{ article.id }}\{{ article.files }}" style="max-width: 25%; border-radius: 6px; margin: 0 auto 25px; display: block;">
+                <div>
+                    {{article.body | safe}}
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            {% endfor %}
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+{#        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">#}
+        <link href="../../static/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .navbar-nav .btn-primary {
+    margin-top: 7px;
+    position: relative;
+    left: 230px;}
+    .navbar-nav .btn-success{
+    margin-top: 7px;
+    position: relative;
+    left: 232px;
+    bottom: 0;}
+    .nav>li{
+    position: relative;
+    right: 180px;}
+</style>
+    </head>
+    <body>
+        {% extends 'layout.html' %}
+        {% block body %}
+            <h3 class="text-center">Result : {{ articles|length }} Article(s)</h3>
+            {% for article in articles %}
+                <h1>{{article.title}}</h1>
+                <small>Written by : {{article.author}} &emsp; in : {{article.written_date.strftime('%a, %d %b %Y %H:%M:%S')}}</small>
+                <hr>
+                <br>
+                <img src="../../static\uploads\users\{{ article.author |safe}}\articles\article{{ article.id }}\{{ article.files }}" style="max-width: 25%; border-radius: 6px; margin: 0 auto 25px; display: block;">
+                <div>
+                    {{article.body | safe}}
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            {% endfor %}
+        {% endblock %}
+    </body>
+</html>
