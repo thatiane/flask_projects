@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Fortnite</title>
+        <link rel="icon" href="../static/i.ico">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
+    </head>
+    <body>
+        <section class="hero is-primary">
+          <div class="hero-body">
+            <div class="container">
+              <h1 class="title">
+                Fortnite Comparison
+              </h1>
+              <h2 class="subtitle">
+                Compare the status of two players.
+                <br>
+                <a class="button is-text" href="https://fortnitetracker.com">All Data comes from fortnitetracker.com</a>
+              </h2>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+        <div class="container">
+          <form method="POST" action="/">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              <input type="hidden" name="player_one_name" value="{% if player_one %}{{ player_one }}{% endif %}">
+              <input class="input" name="player_name" type="text" placeholder="Player name">
+            </p>
+            <p class="control">
+              <button class="button is-info">
+                Search
+              </button>
+            </p>
+          </div>
+          </form>
+        </div>
+        </section>
+
+        <section class="section">
+          <div class="container">
+            <div class="tile is-ancestor">
+              <div class="tile is-vertical is-12">
+                <div class="tile">
+                  {% if player_one %}
+                  <div class="tile is-parent is-vertical">
+                    <article class="tile is-child notification is-primary">
+                      <p class="title">{{ player_one }} </p>
+                      <br>
+                      <p class="subtitle">Wins : {{ player_one_stats['Wins'] }}</p>
+                      <p class="subtitle">Matches : {{ player_one_stats['Matches'] }}</p>
+                      <p class="subtitle">Kills : {{ player_one_stats['Kills'] }}</p>
+                    </article>
+                  </div>
+                  {% endif %}
+                  {% if player_two %}
+                  <div class="tile is-parent">
+                    <article class="tile is-child notification is-info">
+                      <p class="title">{{ player_two }}</p>
+                      <br>
+                      <p class="subtitle">Wins : {{ player_two_stats['Wins'] }}</p>
+                      <p class="subtitle">Matches : {{ player_two_stats['Matches'] }}</p>
+                      <p class="subtitle">Kills : {{ player_two_stats['Kills'] }}</p>
+                    </article>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+    </body>
+</html>
