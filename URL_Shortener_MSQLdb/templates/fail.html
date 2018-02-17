@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Result</title>
-{#        <link rel="shortcut icon" href="../static/g.ico">#}
-    </head>
-    <body>
-        {% block body %}
-            <h2>No Result</h2>
-                {% if msg %}
-                    <h1>{{msg}}</h1>
-                {% endif %}
-        {% endblock %}
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block body %}
+    <h2>No Result</h2>
+        {% if msg %}
+            <h1>{{msg}}</h1>
+        {% endif %}
+{% endblock %}

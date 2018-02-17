@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Result</title>
-    </head>
-    <body>
-        {% block body %}
-            <h1>Result</h1>
-            <h3>The url is Already Exists</h3>
-            {{sl2.id}}
-            <br>
-            {{sl2.original_link}}
-            <br>
-            {{sl2.short_link}}
-            <br>
-            {{ sl2.process_date.strftime('%a, %d %b %Y %H:%M:%S') }}
-        {% endblock %}
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>Already Exists</h1>
+    <p class="lead">ID : {{sl2.id}}</p>
+    <p class="lead">URL : {{sl2.original_link}}</p>
+    <p class="lead">Short Link : {{sl2.short_link}}</p>
+    <p class="lead">Clicks : {{sl2.clicks}}</p>
+    <p class="lead">Date : {{ sl2.process_date.strftime('%a, %d %b %Y %H:%M:%S') }}</p>
+    <a href="/{{sl2.short_link}}" target="_blank" class="btn btn-primary">Redirect To Link</a>
+{% endblock %}

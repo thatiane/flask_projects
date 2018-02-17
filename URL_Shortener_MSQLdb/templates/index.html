@@ -1,16 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>osama</title>
-{#        <link rel="shortcut icon" href="../static/g.ico">#}
-    </head>
-    <body>
-        {% block body %}
-            <form method="post" action="{{ url_for('result') }}">
-                <input type="url" name="url" value="{{request.form.url}}" placeholder="Your original URL here" >
-                <input type="submit" value="Shorten URL">
-            </form>
-        {% endblock %}
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block body %}
+    <form method="post" action="{{ url_for('result') }}" class="form-group">
+        <label class="h2" for="short">URL Shortener</label>
+        <input type="url" name="url" id="short" value="{{request.form.url}}" class="form-control" placeholder="Your original URL here" >
+        <br>
+        <input type="submit" value="Shorten URL" class="btn btn-primary" style="display: block; margin: 0 auto;">
+    </form>
+{% endblock %}

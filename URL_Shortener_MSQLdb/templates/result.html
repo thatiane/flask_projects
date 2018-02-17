@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Result</title>
-{#        <link rel="shortcut icon" href="../static/g.ico">#}
-    </head>
-    <body>
-        {% block body %}
-            <h2>Result</h2>
-                {{short_link.id}}
-                <br>
-                {{short_link.original_link}}
-                <br>
-                {{short_link.short_link}}
-                <br>
-                {{ short_link.process_date.strftime('%a, %d %b %Y %H:%M:%S') }}
-        {% endblock %}
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>Success!</h1>
+    <p class="lead">ID : {{short_link.id}}</p>
+    <p class="lead">URL : {{short_link.original_link}}</p>
+    <p class="lead">Short Link : {{short_link.short_link}}</p>
+    <p class="lead">Date : {{ short_link.process_date.strftime('%a, %d %b %Y %H:%M:%S') }}</p>
+    <a href="/{{short_link.short_link}}" target="_blank" class="btn btn-primary">Redirect To Link</a>
+{% endblock %}
