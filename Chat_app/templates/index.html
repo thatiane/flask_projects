@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Chat app</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" />
+    </head>
+
+    <body style="overflow-y:hidden;" class="has-navbar-fixed-bottom">
+
+        <nav class="navbar is-fixed-bottom" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-item is-expanded" style="padding: 0">
+                    <input id="chat-text" class="input" type="text">
+                    <button id="chat-btn" class="button is-info">Post</button>
+                </div>
+            </div>
+        </nav>
+
+        <div id="content" class="container" style="overflow-y:auto; margin-bottom: 100px;">
+            {% for message in messages %}
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{ message.name }}</strong>
+                            <br> {{ message.message }} <span style="font-size: 12px; margin-left: 20px; color: #3479db;"> in {{ message.posted }}</span>
+                        </p>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+
+
+        <div class="modal is-active">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+            <div class="field has-addons">
+                <div class="control is-expanded">
+                    <input id="username" class="input" type="text" placeholder="Choose a username">
+                </div>
+                <div class="control">
+                    <button id="start" class="button is-info">Start Chatting</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+          $(function () {
+              let username;
+              $('#username').focus();
+              $('#start').on('click', function () {
+                  username = $('#username').val();
+                  if(username != '') {
+                      $('.modal').removeClass('is-active');
+                      document.title = username + "'s Chat";
+                  } else {
+                  	  alert('you should write your name!');
+                  }
+
+              });
+
+              $('#chat-btn').on('click', function () {
+                  message = $('#chat-text').val();
+                  if(message != '') {
+                      $.post('/message', {'username': username, 'message': message}, function () {
+                          $('#chat-text').val('');
+                      });
+                  } else {
+                  	  alert('you should write a word to send it!');
+                  }
+
+              });
+
+              // Enable pusher
+              // Pusher.logToConsole = true;
+
+              let pusher = new Pusher('db14db7ce18aaacd07f7', {
+                  cluster: 'us2',
+                  encrypted: true
+              });
+
+              let channel = pusher.subscribe('chat-channel');
+              channel.bind('new-message', function(data) {
+              const date = new Date();
+              let now = date.getFullYear() + '-' + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1)) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+              let message_template = `<article class="media">
+                                        <div class="media-content">
+                                          <div class="content">
+                                            <p>
+                                              <strong>${data.username}</strong>
+                                              <br> ${data.message} <span style="font-size: 12px; margin-left: 20px; color: #3479db;"> in ${now}</span>
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </article>`;
+              $('#content').append(message_template);
+              $(document).scrollTop($(document).height());
+              });
+          });
+        </script>
+    </body>
+</html>
